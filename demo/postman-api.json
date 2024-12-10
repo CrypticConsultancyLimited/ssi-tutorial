@@ -1,0 +1,217 @@
+{
+    "info": {
+      "name": "BaseAgent API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Get Wallet DIDs",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{base_url}}/wallet-dids?method=key",
+            "host": ["{{base_url}}"],
+            "path": ["wallet-dids"],
+            "query": [
+              {
+                "key": "method",
+                "value": "key"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "Create Invitation",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"label\": \"Invitation Label\",\n  \"alias\": \"Alias\",\n  \"domain\": \"Domain\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{base_url}}/create-invitation",
+            "host": ["{{base_url}}"],
+            "path": ["create-invitation"]
+          }
+        }
+      },
+      {
+        "name": "Get Connections",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{base_url}}/connections?connectionId=123&outOfBandId=456",
+            "host": ["{{base_url}}"],
+            "path": ["connections"],
+            "query": [
+              {
+                "key": "connectionId",
+                "value": "123"
+              },
+              {
+                "key": "outOfBandId",
+                "value": "456"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "Create Schema",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"did\": \"SampleDID\",\n  \"name\": \"SampleSchema\",\n  \"version\": \"1.0.0\",\n  \"attributes\": [\"name\", \"age\"]\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{base_url}}/create-schema",
+            "host": ["{{base_url}}"],
+            "path": ["create-schema"]
+          }
+        }
+      },
+      {
+        "name": "Get Schemas",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{base_url}}/schemas?schemaId=SampleSchemaId",
+            "host": ["{{base_url}}"],
+            "path": ["schemas"],
+            "query": [
+              {
+                "key": "schemaId",
+                "value": "SampleSchemaId"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "Create Credential Definition",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"did\": \"SampleDID\",\n  \"schemaId\": \"SampleSchemaId\",\n  \"tag\": \"SampleTag\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{base_url}}/credential-definition",
+            "host": ["{{base_url}}"],
+            "path": ["credential-definition"]
+          }
+        }
+      },
+      {
+        "name": "Issue Credential",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"connectionId\": \"SampleConnectionId\",\n  \"name\": \"John Doe\",\n  \"age\": 30,\n  \"email\": \"johndoe@example.com\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{base_url}}/issue-credential",
+            "host": ["{{base_url}}"],
+            "path": ["issue-credential"]
+          }
+        }
+      },
+      {
+        "name": "Send Proof Request",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"proofRequestlabel\": \"Proof Request\",\n  \"connectionId\": \"SampleConnectionId\",\n  \"version\": \"1.0\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{base_url}}/send-proof-request",
+            "host": ["{{base_url}}"],
+            "path": ["send-proof-request"]
+          }
+        }
+      },
+      {
+        "name": "Get Proof Records",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{base_url}}/proof-records?proofRecordId=SampleProofRecordId",
+            "host": ["{{base_url}}"],
+            "path": ["proof-records"],
+            "query": [
+              {
+                "key": "proofRecordId",
+                "value": "SampleProofRecordId"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "Send Message",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"connectionId\": \"SampleConnectionId\",\n  \"message\": \"Hello!\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{base_url}}/send-message",
+            "host": ["{{base_url}}"],
+            "path": ["send-message"]
+          }
+        }
+      }
+    ],
+    "variable": [
+      {
+        "key": "base_url",
+        "value": "http://localhost:4000"
+      }
+    ]
+  }
+  
