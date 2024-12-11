@@ -29,3 +29,14 @@ export type AttributeElement = {
     name: string,
     value: string
 }
+
+export type PredicateProps = {
+    name: {
+      name: string;
+      p_type: ">=" | ">" | "<=" | "<";
+      p_value: number;
+      restriction: {
+        cred_def_id: string;
+      }[];
+    };
+  };

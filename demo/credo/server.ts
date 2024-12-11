@@ -2,15 +2,31 @@ import express, { Request, Response } from "express";
 import { BaseAgent } from "./agent";
 import cors from "cors";
 import dotenv from "dotenv";
+import { PredicateProps } from "types";
 dotenv.config();
 
-console.log(process.env.PORT);
-const port = parseInt(process.env.PORT || "4000");
+console.log(process.argv[2]);
+const agentType = process.argv[2];
+const port =
+  agentType === "--issuer"
+    ? parseInt(process.env.ISSUER_API_PORT || "4000")
+    : parseInt(process.env.VERIFIER_API_PORT || "4002");
 const agentPublicEndpoint =
-  process.env.AGENT_PUBLIC_ENDPOINT || `http://localhost:${port}`;
-const agentLabel = process.env.AGENT_LABEL || "MyAgent";
-const endorserDid = process.env.ENDORSER_DID!;
-const endorserSeed = process.env.ENDORSER_SEED!;
+  (agentType === "--issuer"
+    ? process.env.ISSUER_AGENT_PUBLIC_ENDPOINT
+    : process.env.VERIFIER_AGENT_PUBLIC_ENDPOINT) || `http://localhost:${port}`;
+const agentLabel =
+  (agentType === "--issuer"
+    ? process.env.ISSUER_AGENT_LABEL
+    : process.env.VERIFIER_AGENT_LABEL) || "MyAgent";
+const agentDid =
+  agentType === "--issuer"
+    ? process.env.ISSUER_DID!
+    : process.env.VERIFIER_DID!;
+const agentSeed =
+  agentType === "--issuer"
+    ? process.env.ISSUER_SEED!
+    : process.env.VERIFIER_SEED!;
 
 // Initialize the agent
 const agent = new BaseAgent({
@@ -22,43 +38,49 @@ let credentialDefinitionId: string;
 
 const app = express();
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 const initializeAgent = async () => {
   try {
     await agent.init();
-    console.log("BaseAgent initialized successfully.");
-
-    await agent.importDid(endorserDid, endorserSeed);
-    console.log("DID imported successfully.");
-
-    const schemaTemplate = {
-      name: "cryptic",
-      version: `1.1.${Math.floor(Math.random()*100)}`,
-      attrNames: ["name", "age", "email", "department"],
-      issuerId: endorserDid,
-    };
-
-    const schemaResp = await agent.createSchema(endorserDid, schemaTemplate);
-    console.log(schemaResp)
-    if (schemaResp.schemaState.state !== "finished") {
-      throw new Error("Schema creation error: " + JSON.stringify(schemaResp));
-    }
-    const schemaId = schemaResp.schemaState.schemaId;
-
-    const credDefResp = await agent.createCredentialDefinition(
-      endorserDid,
-      schemaId,
-      "bachelor degree"
+    console.log(
+      `${
+        agentType === "--issuer" ? "Issuer Agent" : "Verifier Agent"
+      } initialized successfully.`
     );
-    console.log(credDefResp);
-    if (credDefResp.credentialDefinitionState.state !== "finished") {
-      throw new Error(
-        "Credential definition creation error: " + JSON.stringify(credDefResp)
+
+    if (agentType === "--issuer") {
+      await agent.importDid(agentDid, agentSeed);
+      console.log("DID imported successfully.");
+
+      const schemaTemplate = {
+        name: "cryptic",
+        version: `1.1.${Math.floor(Math.random() * 100)}`,
+        attrNames: ["name", "age", "email", "department"],
+        issuerId: agentDid,
+      };
+
+      const schemaResp = await agent.createSchema(agentDid, schemaTemplate);
+      console.log(schemaResp);
+      if (schemaResp.schemaState.state !== "finished") {
+        throw new Error("Schema creation error: " + JSON.stringify(schemaResp));
+      }
+      const schemaId = schemaResp.schemaState.schemaId;
+
+      const credDefResp = await agent.createCredentialDefinition(
+        agentDid,
+        schemaId,
+        "bachelor degree"
       );
+      console.log(credDefResp);
+      if (credDefResp.credentialDefinitionState.state !== "finished") {
+        throw new Error(
+          "Credential definition creation error: " + JSON.stringify(credDefResp)
+        );
+      }
+      credentialDefinitionId =
+        credDefResp.credentialDefinitionState.credentialDefinitionId;
     }
-    credentialDefinitionId =
-      credDefResp.credentialDefinitionState.credentialDefinitionId;
   } catch (error) {
     console.error("Error initializing BaseAgent:", error);
   }
@@ -98,6 +120,7 @@ app.get("/connections", async (req: Request, res: Response) => {
   }
 });
 
+// For Issuer Agent only 
 app.post("/create-schema", async (req: Request, res: Response) => {
   const { did, name, version, attributes } = req.body;
   const regex = /^\d+\.\d+\.\d+$/;
@@ -132,6 +155,7 @@ app.post("/create-schema", async (req: Request, res: Response) => {
   }
 });
 
+// For Issuer Agent only 
 app.get("/schemas", async (req: Request, res: Response) => {
   const { schemaId } = req.query;
   try {
@@ -142,6 +166,7 @@ app.get("/schemas", async (req: Request, res: Response) => {
   }
 });
 
+// For Issuer Agent only 
 app.post("/credential-definition", async (req: Request, res: Response) => {
   const { did, schemaId, tag } = req.body;
 
@@ -160,6 +185,7 @@ app.post("/credential-definition", async (req: Request, res: Response) => {
   }
 });
 
+// For Issuer Agent only 
 app.get("/credential-definitions", async (req: Request, res: Response) => {
   const { credentialDefinitionId } = req.query;
 
@@ -173,8 +199,9 @@ app.get("/credential-definitions", async (req: Request, res: Response) => {
   }
 });
 
+// For Issuer Agent only 
 app.post("/issue-credential", async (req: Request, res: Response) => {
-  const { connectionId, name, email, age} = req.body;
+  const { connectionId, name, email, age } = req.body;
   if (!connectionId) {
     return res.status(400).send({ error: "connectionId is required" });
   }
@@ -185,22 +212,22 @@ app.post("/issue-credential", async (req: Request, res: Response) => {
   }
   const attributes = [
     {
-        name: "name",
-        value: `${name ?? "Jhon Doe"}`,
-      },
-      {
-        name: "age",
-        value: `${age ?? 30}`,
-      },
-      {
-        name: "email",
-        value: `${email ?? "test@test.com"}`,
-      },
-      {
-        name: "department",
-        value: "Computer Science",
-      }
-  ]
+      name: "name",
+      value: `${name ?? "Jhon Doe"}`,
+    },
+    {
+      name: "age",
+      value: `${age ?? 30}`,
+    },
+    {
+      name: "email",
+      value: `${email ?? "test@test.com"}`,
+    },
+    {
+      name: "department",
+      value: "Computer Science",
+    },
+  ];
   if (!Array.isArray(attributes) || attributes.length === 0) {
     return res
       .status(400)
@@ -222,11 +249,12 @@ app.post("/issue-credential", async (req: Request, res: Response) => {
     );
     res.status(200).send(result);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({ error: error.message });
   }
 });
 
+// For Issuer Agent only 
 app.get("/issued-credentials", async (req: Request, res: Response) => {
   const { credentialId } = req.query;
 
@@ -239,30 +267,23 @@ app.get("/issued-credentials", async (req: Request, res: Response) => {
     res.status(500).send({ error: error.message });
   }
 });
-type PredicateProps = {
-  name: {
-      name: string;
-      p_type: ">=" | ">" | "<=" | "<";
-      p_value: number;
-      restriction: {
-          cred_def_id: string;
-      }[];
-  };
-}
 
 app.post("/send-proof-request", async (req: Request, res: Response) => {
-  const { proofRequestlabel, connectionId, version } =
-    req.body;
-  const attributes = { name: {
-    names: ['department'],
-    restriction: [ {cred_def_id: credentialDefinitionId }]
-  }}
-  const predicates:PredicateProps = { name: {
-    name: 'age',
-    p_type: ">=",
-    p_value: 20,
-    restriction: [ {cred_def_id: credentialDefinitionId }]
-  }}
+  const { proofRequestlabel, connectionId, version } = req.body;
+  const attributes = {
+    name: {
+      names: ["department"],
+      restriction: [{ cred_def_id: credentialDefinitionId }],
+    },
+  };
+  const predicates: PredicateProps = {
+    name: {
+      name: "age",
+      p_type: ">=",
+      p_value: 20,
+      restriction: [{ cred_def_id: credentialDefinitionId }],
+    },
+  };
   if (!proofRequestlabel) {
     return res.status(400).send({ error: "proofRequestlabel is required" });
   }
