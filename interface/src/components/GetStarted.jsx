@@ -10,7 +10,7 @@ import getStarted from "../../public/get-started.json";
 import Lottie from "lottie-react";
 export function GetStart({ setActiveStep }) {
   return (
-    <Card className="w-full max-w-[48rem] flex-row mx-auto mt-60">
+    <Card className="w-full max-w-[60rem] flex-row mx-auto mt-48">
       <CardHeader
         shadow={false}
         floated={false}
@@ -20,7 +20,7 @@ export function GetStart({ setActiveStep }) {
           animationData={getStarted}
           loop={true}
           autoplay={true}
-          className="w-80 h-80 mx-auto"
+          className="w-full h-80 mx-auto"
         />
       </CardHeader>
       <CardBody>
@@ -36,20 +36,37 @@ export function GetStart({ setActiveStep }) {
           wallet.
         </Typography>
         <a href="#" className="inline-block">
-          <Button variant="btn" className="flex items-center gap-2 text-white text-[12px]">
+          <Button
+            variant="btn"
+            className="flex items-center gap-2 text-white text-[12px]"
+          >
             Download
-            <img src="/download.svg" alt="Icon" width="20" height="20" className="text-white"/>
+            <img
+              src="/download.svg"
+              alt="Icon"
+              width="20"
+              height="20"
+              className="text-white"
+            />
           </Button>
         </a>
       </CardBody>
+      <CardFooter className="flex ">
         <Button
           onClick={() => setActiveStep(1)}
           variant="btn"
-          className="flex items-center  text-white text-[12px] w-[120px] pl-2"
+          className="flex items-center  text-white text-[12px] pl-2"
         >
           Next
-          <img src="/right.svg" alt="Icon" width="20" height="20" className="ml-2"/>
+          <img
+            src="/right.svg"
+            alt="Icon"
+            width="20"
+            height="20"
+            className="ml-2"
+          />
         </Button>
+      </CardFooter>
     </Card>
   );
 }

@@ -70,10 +70,17 @@ export function Header() {
         <div className="flex items-center justify-between text-blue-gray-900">
           <Typography
             as="a"
-            href="#"
+            href="/"
             className="mr-4 cursor-pointer py-1.5 font-bold text-[24px]"
           >
             SSI Trust Triangle
+          </Typography>
+          <Typography
+            as="a"
+            href="/verifier"
+            className="mr-4 cursor-pointer py-1.5 font-bold text-[20px]  rounded-lg px-4 text-white bg-gray-500  hover:text-white hover:bg-blue-700"
+          >
+            Use Verifier
           </Typography>
         </div>
       </Navbar>

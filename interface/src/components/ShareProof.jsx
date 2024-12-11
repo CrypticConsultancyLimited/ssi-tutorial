@@ -10,10 +10,10 @@ import {
   CardFooter,
   Input,
 } from "@material-tailwind/react";
-import acceptCred from "../../public/accept-credential.json";
+import shareProof from "../../public/share-credential.json";
 import axios from "axios";
 import Image from "next/image";
-const ShareProof = ({ setActiveStep, connectionId }) => {
+const ShareProof = ({isVerifier, setActiveStep, connectionId }) => {
   const [department, setDepartment] = useState("");
   const [predicateValue, setPredicateValue] = useState("");
 
@@ -95,17 +95,17 @@ const ShareProof = ({ setActiveStep, connectionId }) => {
   };
 
   useEffect(() => {
-    // proofRequestHandler();
+    proofRequestHandler();
   });
   return (
-    <Card className="w-full max-w-[48rem] flex-row mx-auto mt-40">
+    <Card className="w-full max-w-[60rem] flex-row mx-auto mt-40">
       <CardHeader
         shadow={false}
         floated={false}
         className="m-0 w-2/5 shrink-0 rounded-r-none bg-gray-100 flex  items-center"
       >
         <Lottie
-          animationData={acceptCred}
+          animationData={shareProof}
           loop={true}
           autoplay={true}
           className="w-80 h-80 mx-auto"
@@ -113,13 +113,13 @@ const ShareProof = ({ setActiveStep, connectionId }) => {
       </CardHeader>
       <CardBody>
         <Typography variant="h6" color="gray" className="mb-4 uppercase">
-          You are connected with a verifer
+          You are connected with a {isVerifier ? "verifier" : "issuer"}
         </Typography>
         <Typography variant="h4" color="blue-gray" className="mb-2">
           Share Proof Of The Credential From Your Wallet
         </Typography>
         <Typography color="gray" className="mb-8 font-normal">
-          The verifier has sent you a proof request to your bifold wallet.
+          The  {isVerifier ? "verifier" : "issuer"} has sent you a proof request to your bifold wallet.
           Please share proof of the certificate.
         </Typography>
         <Card color="transparent" shadow={false}>
@@ -167,20 +167,25 @@ const ShareProof = ({ setActiveStep, connectionId }) => {
           </form>
         </Card>
       </CardBody>
-      <Button
-        onClick={() => setActiveStep(4)}
-        variant="btn"
-        className="flex items-center  text-white text-[12px] w-[120px] pl-2"
-      >
-        Next
-        <img
-          src="/right.svg"
-          alt="Icon"
-          width="20"
-          height="20"
-          className="ml-1"
-        />
-      </Button>
+      <CardFooter className="flex flex-1 justify-center h-">
+        <Button
+          onClick={() => {
+            console.log("tadaa");
+            setActiveStep((prev) => prev + 1);
+          }}
+          variant="btn"
+          className="flex items-center  text-white text-[12px]"
+        >
+          Next
+          <img
+            src="/right.svg"
+            alt="Icon"
+            width="20"
+            height="20"
+            className="ml-1 inline-block"
+          />
+        </Button>
+      </CardFooter>
     </Card>
   );
 };

@@ -120,7 +120,7 @@ app.get("/connections", async (req: Request, res: Response) => {
   }
 });
 
-// For Issuer Agent only 
+// For Issuer Agent only
 app.post("/create-schema", async (req: Request, res: Response) => {
   const { did, name, version, attributes } = req.body;
   const regex = /^\d+\.\d+\.\d+$/;
@@ -155,7 +155,7 @@ app.post("/create-schema", async (req: Request, res: Response) => {
   }
 });
 
-// For Issuer Agent only 
+// For Issuer Agent only
 app.get("/schemas", async (req: Request, res: Response) => {
   const { schemaId } = req.query;
   try {
@@ -166,7 +166,7 @@ app.get("/schemas", async (req: Request, res: Response) => {
   }
 });
 
-// For Issuer Agent only 
+// For Issuer Agent only
 app.post("/credential-definition", async (req: Request, res: Response) => {
   const { did, schemaId, tag } = req.body;
 
@@ -185,7 +185,7 @@ app.post("/credential-definition", async (req: Request, res: Response) => {
   }
 });
 
-// For Issuer Agent only 
+// For Issuer Agent only
 app.get("/credential-definitions", async (req: Request, res: Response) => {
   const { credentialDefinitionId } = req.query;
 
@@ -199,7 +199,7 @@ app.get("/credential-definitions", async (req: Request, res: Response) => {
   }
 });
 
-// For Issuer Agent only 
+// For Issuer Agent only
 app.post("/issue-credential", async (req: Request, res: Response) => {
   const { connectionId, name, email, age } = req.body;
   if (!connectionId) {
@@ -254,7 +254,7 @@ app.post("/issue-credential", async (req: Request, res: Response) => {
   }
 });
 
-// For Issuer Agent only 
+// For Issuer Agent only
 app.get("/issued-credentials", async (req: Request, res: Response) => {
   const { credentialId } = req.query;
 
@@ -273,7 +273,10 @@ app.post("/send-proof-request", async (req: Request, res: Response) => {
   const attributes = {
     name: {
       names: ["department"],
-      restriction: [{ cred_def_id: credentialDefinitionId }],
+      restriction:
+        agentType === "--issuer"
+          ? [{ cred_def_id: credentialDefinitionId }]
+          : [],
     },
   };
   const predicates: PredicateProps = {
@@ -281,7 +284,10 @@ app.post("/send-proof-request", async (req: Request, res: Response) => {
       name: "age",
       p_type: ">=",
       p_value: 20,
-      restriction: [{ cred_def_id: credentialDefinitionId }],
+      restriction:
+        agentType === "--issuer"
+          ? [{ cred_def_id: credentialDefinitionId }]
+          : [],
     },
   };
   if (!proofRequestlabel) {

@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts","src/app/*.jsx", "src/components/*.jsx", "src/components/Apply.jsx", "src/components/DefaultStepper.jsx", "src/components/header.jsx", "src/components/EstablishConenction.jsx", "src/components/Congrats.jsx", "src/components/Failure.jsx", "src/components/loading.jsx", "src/components/ShareProof.jsx", "src/app/page.jsx", "src/app/layout.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts","src/app/*.jsx", "src/components/*.jsx", "src/components/Apply.jsx", "src/components/IssuerStepper.jsx", "src/components/header.jsx", "src/components/EstablishConenction.jsx", "src/components/Congrats.jsx", "src/components/Failure.jsx", "src/components/loading.jsx", "src/components/ShareProof.jsx", "src/app/page.jsx", "src/app/layout.jsx", "src/app/verifier"],
   "exclude": ["node_modules"]
 }

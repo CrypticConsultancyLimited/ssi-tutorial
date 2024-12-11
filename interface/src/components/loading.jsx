@@ -1,12 +1,18 @@
-import React from 'react'
-import loader from '../../public/loader.svg'
-import Image from 'next/image'
+import React from "react";
+import loader from "../../public/waiting-animation.json";
+import Image from "next/image";
+import Lottie from "lottie-react";
 function Loading() {
   return (
-    <div className='flex justify-center items-center text-center'>
-      <Image priority src={loader} alt='Loading...' height={250} width={250}/>
+    <div className="text-center">
+      <Lottie
+        animationData={loader}
+        loop={true}
+        autoplay={true}
+        className="w-60 h-60 mx-auto"
+      />
     </div>
-  )
+  );
 }
 
-export default Loading
+export default Loading;

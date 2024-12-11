@@ -14,9 +14,12 @@ import {
   Button,
   CardFooter,
 } from "@material-tailwind/react";
-import getStarted from "../../public/get-started.json";
-import Lottie from "lottie-react";
-const EstablishConenction = ({ setConnectionId, setActiveStep }) => {
+
+const EstablishConenction = ({
+  setConnectionId,
+  setActiveStep,
+  isVerifier,
+}) => {
   const [connectionQrCode, setConnectionQrCode] = useState(null);
   const [oobId, setOobId] = useState(null);
   const [showLoading, setShowLoading] = useState(false);
@@ -25,27 +28,28 @@ const EstablishConenction = ({ setConnectionId, setActiveStep }) => {
   // const []
   const generateQR = async () => {
     try {
-      console.log(`${process.env.NEXT_PUBLIC_API_URL}/create-invitation`);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/create-invitation`,
         {
-          label: "Issuer",
-          alias: "Issuer",
+          label: isVerifier ? "Verifier" : "Issuer",
+          alias: isVerifier ? "Verifier" : "Issuer",
           domain: `${process.env.NEXT_PUBLIC_API_URL}`,
         }
       );
-      console.log(response);
-      console.log(
-        "invitation data",
-        response.data.invitation,
-        response.data.invitation.id,
-        response.data.invitationUrl
-      );
       setOobId(response.data.invitation.id);
-      QRCode.toDataURL(response.data.invitationUrl, function (err, data) {
-        if (err) throw err;
-        setConnectionQrCode(data);
-      });
+      QRCode.toDataURL(
+        response.data.invitationUrl,
+        {
+          color: {
+            dark: "#000000",
+            light: "#f3f4f6",
+          },
+        },
+        function (err, data) {
+          if (err) throw err;
+          setConnectionQrCode(data);
+        }
+      );
       return response.data.invitation.id;
     } catch (error) {
       console.log("Error creating invitation:", error.message);
@@ -78,9 +82,11 @@ const EstablishConenction = ({ setConnectionId, setActiveStep }) => {
             const id = resp.data[0].id;
             if (state === "completed") {
               console.log(id);
-              localStorage.setItem("issuer_connection_id", id);
-              setConnectionId(id)
-              setActiveStep(2);
+              isVerifier
+                ? localStorage.setItem("verifier_connection_id", id)
+                : localStorage.setItem("issuer_connection_id", id);
+              setConnectionId(id);
+              setActiveStep((prev) => prev + 1);
               clearInterval(intervalId);
               clearTimeout(timeoutId);
             }
@@ -112,7 +118,6 @@ const EstablishConenction = ({ setConnectionId, setActiveStep }) => {
         return cleanup;
       }
     })();
-
   }, [oobId]);
 
   const formatTime = (seconds) => {
@@ -131,7 +136,7 @@ const EstablishConenction = ({ setConnectionId, setActiveStep }) => {
 
   return (
     <>
-      <Card className="w-full max-w-[64rem] flex-row mx-auto mt-40">
+      <Card className="w-full max-w-[64rem] h-[32rem] flex-row mx-auto mt-40">
         <CardHeader
           shadow={false}
           floated={false}
@@ -142,7 +147,7 @@ const EstablishConenction = ({ setConnectionId, setActiveStep }) => {
               <div
                 id="qr-code"
                 style={{ marginBottom: "30px" }}
-                className=" flex justify-center p-4"
+                className=" flex justify-center p-4 bg-gray-100"
               >
                 <Image
                   src={connectionQrCode}
@@ -156,30 +161,37 @@ const EstablishConenction = ({ setConnectionId, setActiveStep }) => {
               </div>
             </>
           ) : (
-            <>
-              <Loading />
-              <div className="text-center text-gray-800 mb-4 text-[20px]">
-                <h1>Scanning is completed</h1>
-                <h2>
-                  Please wait. We are setting up connection with your mobile
+            <div className="flex flex-col justify-center items-center h-full">
+              <div className="mb-6">
+                <Loading />
+              </div>
+              <div className="text-center text-gray-800">
+                <h1 className="text-lg font-semibold mb-2">
+                  Scanning is completed
+                </h1>
+                <h2 className="text-base">
+                  Please wait. We are setting up a connection with your mobile
                   wallet
                 </h2>
               </div>
-            </>
+            </div>
           )}
         </CardHeader>
         <CardBody>
           <Typography variant="h6" color="gray" className="mb-4 uppercase">
-            Let's connect with a issuer
+            Let's connect with a {isVerifier ? "verifier" : "issuer"}
           </Typography>
           <Typography variant="h4" color="blue-gray" className="mb-2">
             Scan the QR code to connect
           </Typography>
           <Typography color="gray" className="mb-8 font-normal">
             Scan the QR code displayed on the left side to connect with a
-            issuer. After successful connection, you will be able to chat with
-            the issuer through this wallet. This Issuer will provide you a
-            certificate in the next phase
+            {isVerifier ? "verifier" : "issuer"}. After successful connection,
+            you will be able to chat with the{" "}
+            {isVerifier ? "verifier" : "issuer"} through this wallet.{" "}
+            {isVerifier
+              ? "This Verifier will ask for a proof of the previously issued certificate in the next phase. If you do not have any credential, please obtain one from issuer."
+              : "This Issuer will provide you a certificate in the next phase"}
           </Typography>
         </CardBody>
       </Card>

@@ -7,7 +7,7 @@ import {
   Button,
   CardFooter,
 } from "@material-tailwind/react";
-import acceptCred from "../../public/accept-credential.json";
+import acceptCred from "../../public/accept-cred.json";
 import Lottie from "lottie-react";
 import axios from "axios";
 function AcceptCredential({ setActiveStep, connectionId }) {
@@ -44,7 +44,7 @@ function AcceptCredential({ setActiveStep, connectionId }) {
           animationData={acceptCred}
           loop={true}
           autoplay={true}
-          className="w-80 h-80 mx-auto"
+          className="w-80 h-80 ml-[-60px]"
         />
       </CardHeader>
       <CardBody>

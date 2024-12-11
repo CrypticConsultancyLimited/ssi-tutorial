@@ -1,10 +1,10 @@
-import { DefaultStepper } from "@/components/DefaultStepper";
+import { IssuerStepper } from "@/components/IssuerStepper";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <div>
-      <DefaultStepper />
+      <IssuerStepper />
     </div>
   );
 }
