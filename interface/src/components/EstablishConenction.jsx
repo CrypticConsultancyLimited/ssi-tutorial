@@ -28,8 +28,9 @@ const EstablishConenction = ({
   // const []
   const generateQR = async () => {
     try {
+      const baseUrl = isVerifier ? process.env.NEXT_PUBLIC_VERIFIER_API_URL : process.env.NEXT_PUBLIC_API_URL
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/create-invitation`,
+        `${baseUrl}/create-invitation`,
         {
           label: isVerifier ? "Verifier" : "Issuer",
           alias: isVerifier ? "Verifier" : "Issuer",
@@ -59,8 +60,9 @@ const EstablishConenction = ({
 
   const getConnectionStatus = async (outOfBandId) => {
     try {
+      const baseUrl = isVerifier ? process.env.NEXT_PUBLIC_VERIFIER_API_URL : process.env.NEXT_PUBLIC_API_URL
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/connections?outOfBandId=${outOfBandId}`
+        `${baseUrl}/connections?outOfBandId=${outOfBandId}`
       );
       console.log(response);
 

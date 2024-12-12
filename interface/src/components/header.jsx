@@ -78,7 +78,7 @@ export function Header() {
           <Typography
             as="a"
             href="/verifier"
-            className="mr-4 cursor-pointer py-1.5 font-bold text-[20px]  rounded-lg px-4 text-white bg-gray-500  hover:text-white hover:bg-blue-700"
+            className="mr-4 cursor-pointer py-1.5 font-bold text-[20px]  rounded-lg px-4 text-blue-400 bg-gray-100  hover:text-white hover:bg-blue-700"
           >
             Use Verifier
           </Typography>

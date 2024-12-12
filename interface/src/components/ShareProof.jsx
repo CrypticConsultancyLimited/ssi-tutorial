@@ -13,21 +13,24 @@ import {
 import shareProof from "../../public/share-credential.json";
 import axios from "axios";
 import Image from "next/image";
-const ShareProof = ({isVerifier, setActiveStep, connectionId }) => {
+const ShareProof = ({ isVerifier, setActiveStep, connectionId }) => {
   const [department, setDepartment] = useState("");
   const [predicateValue, setPredicateValue] = useState("");
 
   const requestSentRef = useRef(false);
 
   const proofRequestHandler = async () => {
-    console.log("proofRequestHandler");
-    if (requestSentRef.current) return; // Prevent duplicate calls in development mode
+    if (requestSentRef.current) return;
     requestSentRef.current = true;
     try {
-      const proofResp = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/send-proof-request`,
-        { proofRequestlabel: "IT Certificate", connectionId, version: "1.0" }
-      );
+      const baseUrl = isVerifier
+        ? process.env.NEXT_PUBLIC_VERIFIER_API_URL
+        : process.env.NEXT_PUBLIC_API_URL;
+      const proofResp = await axios.post(`${baseUrl}/send-proof-request`, {
+        proofRequestlabel: "IT Certificate",
+        connectionId,
+        version: "1.0",
+      });
       console.log(proofResp);
       await proofStatusCheck(proofResp.data.id);
     } catch (error) {
@@ -40,9 +43,12 @@ const ShareProof = ({isVerifier, setActiveStep, connectionId }) => {
 
     const intervalId = setInterval(async () => {
       try {
+        const baseUrl = isVerifier
+        ? process.env.NEXT_PUBLIC_VERIFIER_API_URL
+        : process.env.NEXT_PUBLIC_API_URL;
         if (proofRecordId) {
           const proofData = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/proof-data/${proofRecordId}`
+            `${baseUrl}/proof-data/${proofRecordId}`
           );
           if (proofData.data.presentation) {
             console.log(
@@ -119,8 +125,8 @@ const ShareProof = ({isVerifier, setActiveStep, connectionId }) => {
           Share Proof Of The Credential From Your Wallet
         </Typography>
         <Typography color="gray" className="mb-8 font-normal">
-          The  {isVerifier ? "verifier" : "issuer"} has sent you a proof request to your bifold wallet.
-          Please share proof of the certificate.
+          The {isVerifier ? "verifier" : "issuer"} has sent you a proof request
+          to your bifold wallet. Please share proof of the certificate.
         </Typography>
         <Card color="transparent" shadow={false}>
           <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
