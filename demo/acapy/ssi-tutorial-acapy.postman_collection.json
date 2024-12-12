@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "51580f39-d9bd-4b8c-979d-f301b5f075d5",
+		"name": "ssi-tutorial-acapy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20013487"
+	},
+	"item": [
+		{
+			"name": "/create-invitation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"label\": \"demo holder\",\n    \"alias\": \"alias\",\n    \"domain\": \"domain\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:4001/create-invitation"
+			},
+			"response": []
+		},
+		{
+			"name": "acapy/connections",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8021/connections"
+			},
+			"response": []
+		},
+		{
+			"name": "/connections",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4001/connections?connectionId=e4ec6688-98fd-42e4-9ef6-a7380f7d5f0a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"connections"
+					],
+					"query": [
+						{
+							"key": "connectionId",
+							"value": "e4ec6688-98fd-42e4-9ef6-a7380f7d5f0a"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/create-schema",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"attributes\": [\n    \"name\",\n    \"age\",\n    \"email\",\n    \"department\"\n\n  ],\n  \"name\": \"prefs\",\n  \"version\": \"1.0.0\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:4001/create-schema"
+			},
+			"response": []
+		},
+		{
+			"name": "/schemas/{schemaId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4001/schemas?schemaId=Qyf92FVesPLchwcTtDzuRG:2:prefs:1.0.0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"schemas"
+					],
+					"query": [
+						{
+							"key": "schemaId",
+							"value": "Qyf92FVesPLchwcTtDzuRG:2:prefs:1.0.0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "credential-definition",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"did\": \"dummydid\",\n    \"schemaId\": \"Qyf92FVesPLchwcTtDzuRG:2:prefs:1.0.0\",\n    \"tag\": \"personal-data\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:4001/credential-definition"
+			},
+			"response": []
+		},
+		{
+			"name": "credential-definitions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4001/credential-definitions?credentialDefinitionId=Qyf92FVesPLchwcTtDzuRG:3:CL:2610977:personal-data",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"credential-definitions"
+					],
+					"query": [
+						{
+							"key": "credentialDefinitionId",
+							"value": "Qyf92FVesPLchwcTtDzuRG:3:CL:2610977:personal-data"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/issue-credential",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"connectionId\": \"75824ed3-305e-4297-ac3f-00091c962e3b\",\n    \"name\": \"Arif\",\n    \"email\": \"arif@gmail.com\",\n    \"age\": \"25\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:4001/issue-credential"
+			},
+			"response": []
+		},
+		{
+			"name": "/issued-credentials",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4001/issued-credentials?credentialId=e406965c-87b9-4a8b-a7ef-ecff996ac495",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"issued-credentials"
+					],
+					"query": [
+						{
+							"key": "credentialId",
+							"value": "e406965c-87b9-4a8b-a7ef-ecff996ac495"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/send-proof-request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"proofRequestlabel\" : \"proof request\",\n    \"connectionId\" : \"e4ec6688-98fd-42e4-9ef6-a7380f7d5f0a\",\n    \"version\" : \"1.0.0\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:4001/send-proof-request"
+			},
+			"response": []
+		},
+		{
+			"name": "/send-message",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
