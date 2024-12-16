@@ -181,24 +181,24 @@ app.post("/issue-credential", async (req: Request, res: Response) => {
   }
   const attributes = [
     {
-      mime: "application/json",
-      name: "name",
-      value: `${name ?? "Jhon Doe"}`,
+      // "mime-type": "application/json",
+      "name": "name",
+      "value": `${name ?? "Jhon Doe"}`,
     },
     {
-      mime: "application/json",
-      name: "age",
-      value: `${age ?? 30}`,
+      // "mime-type": "application/json",
+      "name": "age",
+      "value": `${age ?? 30}`,
     },
     {
-      mime: "application/json",
-      name: "email",
-      value: `${email ?? "test@test.com"}`,
+      // "mime-type": "application/json",
+      "name": "email",
+      "value": `${email ?? "test@test.com"}`,
     },
     {
-      mime: "application/json",
-      name: "department",
-      value: "Computer Science",
+      // "mime-type": "application/json",
+      "name": "department",
+      "value": "Computer Science",
     },
   ];
   if (!Array.isArray(attributes) || attributes.length === 0) {
@@ -216,7 +216,7 @@ app.post("/issue-credential", async (req: Request, res: Response) => {
   }
   try {
 
-    const result = await apiFetch(issueCredential, 'POST', {connection_id: connectionId, cred_def_id: credentialDefinitionId, credential_preview: {attributes}});
+    const result = await apiFetch(issueCredential, 'POST', {connection_id: connectionId, cred_def_id: credentialDefinitionId, credential_proposal: { "@type" : "issue-credential/1.0/credential-preview", attributes}});
     if(result){
       res.status(200).send(result);
     }else{

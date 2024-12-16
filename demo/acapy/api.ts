@@ -9,7 +9,7 @@ export const createSchema = `${acapy_admin_url}/schemas`;
 export const getSchema = (schema_id: any) => route(`/schemas/${schema_id}`);
 export const createCredentialDefinition = route(`/credential-definitions`);
 export const getCredentialDefinition = (credDefId: any) => route(`/credential-definitions/${credDefId}`);
-export const issueCredential = route(`/issue-credential/create-offer`);
+export const issueCredential = route(`/issue-credential/send`);
 export const getIssuedCredential = (credentialId: any) => route(`/issue-credential/records/${credentialId}`);
 export const sendProofRequest = route(`/present-proof/send-request`);
 export const getProofRequest = (proofRecordId: any) => route(`/present-proof/records/${proofRecordId}`);
