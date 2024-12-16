@@ -108,14 +108,14 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"did\": \"dummydid\",\n    \"schemaId\": \"Qyf92FVesPLchwcTtDzuRG:2:prefs:1.0.0\",\n    \"tag\": \"personal-data\"\n}",
+					"raw": "{\n    \"did\": \"dummydid\",\n    \"schemaId\": \"JQ4JSKQqhfCw8JCek46SvU:2:prefs:1.0.0\",\n    \"tag\": \"personal-data-18\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:4001/credential-definition"
+				"url": "http://localhost:4002/credential-definition"
 			},
 			"response": []
 		},
@@ -194,19 +194,27 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"proofRequestlabel\" : \"proof request\",\n    \"connectionId\" : \"e4ec6688-98fd-42e4-9ef6-a7380f7d5f0a\",\n    \"version\" : \"1.0.0\"\n}",
+					"raw": "{\n    \"proofRequestlabel\" : \"proof request\",\n    \"connectionId\" : \"8b31f5ae-2645-4f68-8b39-0ca1e30231e7\",\n    \"version\" : \"1.0.0\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:4001/send-proof-request"
+				"url": "http://localhost:4002/send-proof-request"
 			},
 			"response": []
 		},
 		{
 			"name": "/send-message",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "acapy/proof/record",
 			"request": {
 				"method": "GET",
 				"header": []
