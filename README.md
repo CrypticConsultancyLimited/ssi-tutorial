@@ -46,7 +46,7 @@
 
 ### The Trust Triangle
 
-![Trust-Triangle](assets/SSI-Trust-Triangle.jpg)
+![Trust-Triangle](demo/credo/assets/SSI-Trust-Triangle.jpg)
 
 The Trust Triangle is a foundational concept in Self-Sovereign Identity that illustrates the relationships between the three key parties involved in identity verification:
 
@@ -119,7 +119,7 @@ When applying for a job:
 
 ## Technical Workflow of SSI Entities
 
-![technical-work-flow](assets/technical-work-flow.png)
+![technical-work-flow](demo/credo/assets/technical-work-flow.png)
 
 ### Initial Setup
 
