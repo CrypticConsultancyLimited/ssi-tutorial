@@ -573,6 +573,10 @@ By leveraging the principles of SSI, users can maintain control over their perso
 
 For further information, please refer to the documentation of the underlying libraries and technologies used in this implementation.
 
+## ![cat](demo/credo/assets/cat.gif) Further reading
+
+https://github.com/animo/awesome-self-sovereign-identity
+
 ## 🎯 **Contributions & Feedback**
 
 Feel free to contribute to this project! If you have any issues or suggestions, please open an issue. 🛠️🚀
@@ -581,7 +585,7 @@ Feel free to contribute to this project! If you have any issues or suggestions, 
 
 ### 📞 **Contact**
 
-For questions or support, reach out to **Cryptic Consultancy Limited**! 😊
+For questions or support, reach out to **Cryptic Consultancy Limited**! ![pistol](demo/credo/assets/pistol.png)
 
 ---
 
