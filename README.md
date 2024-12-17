@@ -6,7 +6,7 @@
 - [🔑 Key Concepts](#-key-concepts-of-ssi)
 - [✨ Benefits](#-key-benefits-of-ssi)
 - [🔄 Trust Triangle](#-the-trust-triangle)
-- [💡 How SSI Works](#how-ssi-works-in-real-life)
+- [💡 How SSI Works](#-how-ssi-works-in-real-life)
   - [🏛️ Issuer](#1-issuer)
   - [👤 Holder](#2-holder-you)
   - [✅ Verifier](#3-verifier-the-checker)
@@ -390,133 +390,199 @@ yarn dev
 
 </div>
 
-## API Overview
+## 🚀 API Overview
 
 This API provides endpoints for managing agents, credentials, and interactions in an SSI ecosystem. Below are the key routes defined in `server.ts`.
 
-### API Routes
+## 🗂️ **API Routes**
 
-| **SSI Feature**                    | **Purpose**                                           | **API Endpoint**                 |
-| ---------------------------------- | ----------------------------------------------------- | -------------------------------- |
-| **Get Wallet DIDs**                | Retrieve the DIDs associated with the user's wallet.  | `GET /wallet-dids`               |
-| **Register Schema**                | Create a new schema for credentials.                  | `POST /create-schema`            |
-| **Register Credential Definition** | Create a new credential definition based on a schema. | `POST /credential-definition`    |
-| **Create Connection Invitation**   | Create an invitation for a connection.                | `POST /create-invitation`        |
-| **Get All Connections**            | Retrieve details about existing connections.          | `GET /connections`               |
-| **Send Message**                   | Send a message to a connection.                       | `POST /send-message`             |
-| **Issue Credential**               | Issue a new credential to a connection.               | `POST /issue-credential`         |
-| **Get All Issued Credentials**     | Retrieve details of issued credentials.               | `GET /issued-credentials`        |
-| **Send Proof Request**             | Send a proof request to a connection.                 | `POST /send-proof-request`       |
-| **Get All Proof Requests Data**    | Retrieve proof records associated with a connection.  | `GET /proof-records`             |
-| **Retrieve Proof Data**            | Retrieve proof data for a specific proof record.      | `GET /proof-data/:proofRecordId` |
+| **✨ SSI Feature**                    | **🔍 Purpose**                                        | **🔗 API Endpoint**              |
+| ------------------------------------- | ----------------------------------------------------- | -------------------------------- |
+| **🌐 Get Wallet DIDs**                | Retrieve the DIDs associated with the user's wallet.  | `GET /wallet-dids`               |
+| **📚 Register Schema**                | Create a new schema for credentials.                  | `POST /create-schema`            |
+| **📝 Register Credential Definition** | Create a new credential definition based on a schema. | `POST /credential-definition`    |
+| **🛠️ Create Connection Invitation**   | Create an invitation for a connection.                | `POST /create-invitation`        |
+| **📈 Get All Connections**            | Retrieve details about existing connections.          | `GET /connections`               |
+| **📧 Send Message**                   | Send a message to a connection.                       | `POST /send-message`             |
+| **📉 Issue Credential**               | Issue a new credential to a connection.               | `POST /issue-credential`         |
+| **📜 Get All Issued Credentials**     | Retrieve details of issued credentials.               | `GET /issued-credentials`        |
+| **📏 Send Proof Request**             | Send a proof request to a connection.                 | `POST /send-proof-request`       |
+| **📂 Get All Proof Records**          | Retrieve proof records associated with a connection.  | `GET /proof-records`             |
+| **💰 Retrieve Proof Data**            | Retrieve proof data for a specific proof record.      | `GET /proof-data/:proofRecordId` |
 
-#### 1. **GET /wallet-dids**
+---
 
-- **Description**: Retrieve the DIDs associated with the user's wallet.
-- **Query Parameters**:
-  - `method`: The method to use for fetching DIDs.
-- **Response**: Returns a list of DIDs.
+## **GET /wallet-dids**
 
-#### 2. **POST /create-invitation**
+**🔍 Description:** Retrieve the DIDs associated with the user's wallet.  
+**📂 Query Parameters:**
 
-- **Description**: Create an invitation for a connection.
-- **Request Body**:
-  - `label`: A label for the invitation.
-  - `alias`: An alias for the invitation.
-  - `domain`: The domain associated with the invitation.
-- **Response**: Returns the invitation details.
+- `method`: The method to use for fetching DIDs.
 
-#### 3. **GET /connections**
+**📥 Response:** Returns a list of DIDs. ✅
 
-- **Description**: Retrieve connection details.
-- **Query Parameters**:
-  - `connectionId`: The ID of the connection.
-  - `outOfBandId`: The out-of-band ID for the connection.
-- **Response**: Returns connection details.
+---
 
-#### 4. **POST /create-schema**
+## **POST /create-invitation**
 
-- **Description**: Create a new schema for credentials.
-- **Request Body**:
-  - `did`: The DID of the issuer.
-  - `name`: The name of the schema.
-  - `version`: The version of the schema.
-  - `attributes`: An array of attributes for the schema.
-- **Response**: Returns the created schema details.
+**🔍 Description:** Create an invitation for a connection.  
+**📂 Request Body:**
 
-#### 5. **GET /schemas**
+- `label`: A label for the invitation.
+- `alias`: An alias for the invitation.
+- `domain`: The domain associated with the invitation.
 
-- **Description**: Retrieve schema details.
-- **Query Parameters**:
-  - `schemaId`: The ID of the schema to retrieve.
-- **Response**: Returns the schema details.
+**📥 Response:** Returns the invitation details. 📨
 
-#### 6. **POST /credential-definition**
+---
 
-- **Description**: Create a new credential definition.
-- **Request Body**:
-  - `did`: The DID of the issuer.
-  - `schemaId`: The ID of the schema.
-  - `tag`: A tag for the credential definition.
-- **Response**: Returns the created credential definition details.
+## **GET /connections**
 
-#### 7. **GET /credential-definitions**
+**🔍 Description:** Retrieve connection details.  
+**📂 Query Parameters:**
 
-- **Description**: Retrieve credential definition details.
-- **Query Parameters**:
-  - `credentialDefinitionId`: The ID of the credential definition.
-- **Response**: Returns the credential definition details.
+- `connectionId`: The ID of the connection.
+- `outOfBandId`: The out-of-band ID for the connection.
 
-#### 8. **POST /issue-credential**
+**📥 Response:** Returns connection details. 🔗
 
-- **Description**: Issue a new credential to a connection.
-- **Request Body**:
-  - `connectionId`: The ID of the connection.
-  - `name`: The name of the credential holder.
-  - `email`: The email of the credential holder.
-  - `age`: The age of the credential holder.
-- **Response**: Returns the issued credential details.
+---
 
-#### 9. **GET /issued-credentials**
+## **POST /create-schema**
 
-- **Description**: Retrieve issued credentials.
-- **Query Parameters**:
-  - `credentialId`: The ID of the credential to retrieve.
-- **Response**: Returns the issued credential details.
+**🔍 Description:** Create a new schema for credentials.  
+**📂 Request Body:**
 
-#### 10. **POST /send-proof-request**
+- `did`: The DID of the issuer.
+- `name`: The name of the schema.
+- `version`: The version of the schema.
+- `attributes`: An array of attributes for the schema.
 
-- **Description**: Send a proof request to a connection.
-- **Request Body**:
-  - `proofRequestlabel`: A label for the proof request.
-  - `connectionId`: The ID of the connection.
-  - `version`: The version of the proof request.
-- **Response**: Returns the result of the proof request.
+**📥 Response:** Returns the created schema details. 📋
 
-#### 11. **GET /proof-records**
+---
 
-- **Description**: Retrieve proof records.
-- **Query Parameters**:
-  - `proofRecordId`: The ID of the proof record to retrieve.
-- **Response**: Returns the proof record details.
+## **GET /schemas**
 
-#### 12. **GET /proof-data/:proofRecordId**
+**🔍 Description:** Retrieve schema details.  
+**📂 Query Parameters:**
 
-- **Description**: Retrieve proof data for a specific proof record.
-- **Path Parameters**:
-  - `proofRecordId`: The ID of the proof record.
-- **Response**: Returns the proof data.
+- `schemaId`: The ID of the schema to retrieve.
 
-#### 13. **POST /send-message**
+**📥 Response:** Returns the schema details. 🗃️
 
-- **Description**: Send a message to a connection.
-- **Request Body**:
-  - `connectionId`: The ID of the connection.
-  - `message`: The message content.
-- **Response**: Returns the result of the message sending.
+---
+
+## **POST /credential-definition**
+
+**🔍 Description:** Create a new credential definition.  
+**📂 Request Body:**
+
+- `did`: The DID of the issuer.
+- `schemaId`: The ID of the schema.
+- `tag`: A tag for the credential definition.
+
+**📥 Response:** Returns the created credential definition details. 🛠️
+
+---
+
+## **GET /credential-definitions**
+
+**🔍 Description:** Retrieve credential definition details.  
+**📂 Query Parameters:**
+
+- `credentialDefinitionId`: The ID of the credential definition.
+
+**📥 Response:** Returns the credential definition details. 🏷️
+
+---
+
+## **POST /issue-credential**
+
+**🔍 Description:** Issue a new credential to a connection.  
+**📂 Request Body:**
+
+- `connectionId`: The ID of the connection.
+- `name`: The name of the credential holder.
+- `email`: The email of the credential holder.
+- `age`: The age of the credential holder.
+
+**📥 Response:** Returns the issued credential details. 🎓
+
+---
+
+## **GET /issued-credentials**
+
+**🔍 Description:** Retrieve issued credentials.  
+**📂 Query Parameters:**
+
+- `credentialId`: The ID of the credential to retrieve.
+
+**📥 Response:** Returns the issued credential details. 🔖
+
+---
+
+## **POST /send-proof-request**
+
+**🔍 Description:** Send a proof request to a connection.  
+**📂 Request Body:**
+
+- `proofRequestlabel`: A label for the proof request.
+- `connectionId`: The ID of the connection.
+- `version`: The version of the proof request.
+
+**📥 Response:** Returns the result of the proof request. 🔐
+
+---
+
+## **GET /proof-records**
+
+**🔍 Description:** Retrieve proof records.  
+**📂 Query Parameters:**
+
+- `proofRecordId`: The ID of the proof record to retrieve.
+
+**📥 Response:** Returns the proof record details. 🧾
+
+---
+
+## **GET /proof-data/:proofRecordId**
+
+**🔍 Description:** Retrieve proof data for a specific proof record.  
+**📂 Path Parameters:**
+
+- `proofRecordId`: The ID of the proof record.
+
+**📥 Response:** Returns the proof data. 📊
+
+---
+
+## **POST /send-message**
+
+**🔍 Description:** Send a message to a connection.  
+**📂 Request Body:**
+
+- `connectionId`: The ID of the connection.
+- `message`: The message content.
+
+**📥 Response:** Returns the result of the message sending. ✉️
 
 ## Conclusion
 
 By leveraging the principles of SSI, users can maintain control over their personal information while interacting securely with various services.
 
 For further information, please refer to the documentation of the underlying libraries and technologies used in this implementation.
+
+## 🎯 **Contributions & Feedback**
+
+Feel free to contribute to this project! If you have any issues or suggestions, please open an issue. 🛠️🚀
+
+---
+
+### 📞 **Contact**
+
+For questions or support, reach out to **Cryptic Consultancy Limited**! 😊
+
+---
+
+Made with ❤️ for the SSI community!
