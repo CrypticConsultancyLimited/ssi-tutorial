@@ -17,7 +17,7 @@
 - [API Overview](#api-overview)
 - [Conclusion](#conclusion)
 
-![SSI Banner](assets/what-is-ssi.png)
+![SSI Banner](demo/credo/assets/what-is-ssi.png)
 
 **Self-Sovereign Identity (SSI)** is a digital identity model that allows individuals to own, control, and share their personal information without relying on a central authority. In SSI, users can create and manage their identities using decentralized technologies, such as blockchain, which enhances privacy, security, and user autonomy.
 
