@@ -11,8 +11,8 @@
   - [👤 Holder](#2-holder-you)
   - [✅ Verifier](#3-verifier-the-checker)
 - [⚙️ Technical Workflow](#️-technical-workflow-of-ssi-entities)
-- [🚀 Setup Guide](#demonstration-setup-guide)
-- [📚 API Reference](#api-overview)
+- [🚀 Setup Guide](#-demonstration-setup-guide)
+- [📚 API Overview](#-api-overview)
 - [🎉 Conclusion](#conclusion)
 
 ![SSI Banner](demo/credo/assets/what-is-ssi.png)
@@ -340,7 +340,22 @@ NEXT_PUBLIC_VERIFIER_LABEL="Employer"
 yarn dev
 ```
 
-### 🎮 Running the Demo
+### 📱Mobile Wallet Setup
+
+Download Bifold app from the following link: <a href="https://drive.google.com/uc?export=download&id=10Qv5FNXOsp6-kyafJefXYYSe_v5bpfuq">Click here</a>
+
+Install the app on your phone and login to the app creating a 6 digit pin. You can use this wallet for:
+
+- Beign connected with other entities (Issuer / Verifier).
+- Sending message to other parties.
+- Storing credentials.
+- Presenting proof.
+- Making your own invitation qr to share with other parties.
+- And many more (Explore yourself ... 😉)
+
+<br>
+
+## 🎮 Running the Demo
 
 #### 1️⃣ Start Credo Agents
 
