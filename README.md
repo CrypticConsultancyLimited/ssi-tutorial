@@ -377,13 +377,9 @@ We will use two different frameworks (Credo and ACAPY) to demonstrate the SSI wo
 - Share proof from the Bifold wallet
 - Verify received proof
 
-### 🎥 
+### 🎥 Full Demo
 
-<video width="600" controls>
-  <source src="./demo/acapy/assets/full-demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yzG49VHNaTs" frameborder="0" allowfullscreen></iframe>
 </div>
 
 ## 🚀 API Overview
@@ -395,7 +391,7 @@ ACAPY provides two API versions (v1 and v2) with different features and capabili
 ### API Versions for ACAPY
 
 #### 🔷 Version 1 (v1)
-The legacy API version, still widely used and supported.
+The legacy API version, still widely used and supported. (Will be removed in the upcoming acapy versions)
 ```bash
 # Base URL format
 http://localhost:{port}/v1/
