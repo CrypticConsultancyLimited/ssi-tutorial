@@ -28,8 +28,8 @@ const ShareProof = ({isVerifier, setActiveStep, connectionId }) => {
         `${process.env.NEXT_PUBLIC_API_URL}/send-proof-request`,
         { proofRequestlabel: "IT Certificate", connectionId, version: "1.0" }
       );
-      console.log(proofResp);
-      await proofStatusCheck(proofResp.data.id);
+      console.log("Proof response: ", JSON.stringify(proofResp));
+      await proofStatusCheck(proofResp.data.id ?? proofResp.data.pres_ex_id);
     } catch (error) {
       console.log(error);
     }
@@ -37,31 +37,41 @@ const ShareProof = ({isVerifier, setActiveStep, connectionId }) => {
 
   const proofStatusCheck = async (proofRecordId) => {
     let timeoutId = null;
-
+    console.log('---->>> ProofRecordId: ', proofRecordId);
     const intervalId = setInterval(async () => {
       try {
         if (proofRecordId) {
           const proofData = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/proof-data/${proofRecordId}`
           );
-          if (proofData.data.presentation) {
+          console.log('------>>> Proof data: ', JSON.stringify(proofData));
+
+          const presentation = proofData.data.presentation?.anoncreds ?? proofData.data.by_format?.pres?.indy ?? undefined;
+
+          console.log('presentation data: ', JSON.stringify(presentation));
+
+          if (presentation) {
             console.log(
               "revealed attributes",
-              proofData.data.presentation.anoncreds,
-              proofData.data.presentation.anoncreds.requested_proof
+              presentation,
+              presentation.requested_proof
                 .revealed_attr_groups.name.values.department.raw
             );
             setDepartment(
-              proofData.data.presentation.anoncreds.requested_proof
+              presentation.requested_proof
                 .revealed_attr_groups.name.values.department.raw
             );
             console.log(
-              "predicate data",
-              proofData.data.presentation.anoncreds.proof.proofs[1]
+              "------->>>> predicate data",
+              presentation.proof.proofs.length > 1?
+            presentation.proof.proofs[1]
+                .primary_proof.ge_proofs[0].predicate : presentation.proof.proofs[0]
                 .primary_proof.ge_proofs[0].predicate
             );
-            const predicate =
-              proofData.data.presentation.anoncreds.proof.proofs[1]
+
+            const predicate = presentation.proof.proofs.length > 1?
+            presentation.proof.proofs[1]
+                .primary_proof.ge_proofs[0].predicate : presentation.proof.proofs[0]
                 .primary_proof.ge_proofs[0].predicate;
             console.log("predicate", predicate);
             if (predicate.p_type === "GE") {
@@ -79,6 +89,7 @@ const ShareProof = ({isVerifier, setActiveStep, connectionId }) => {
           }
         }
       } catch (error) {
+        console.log('Error: ', error);
         clearInterval(intervalId);
         clearTimeout(timeoutId);
       }

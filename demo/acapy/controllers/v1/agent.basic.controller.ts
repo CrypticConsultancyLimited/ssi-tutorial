@@ -1,8 +1,8 @@
 
-import { createCredentialDefinition, getCredentialDefinition, sendMessage } from './../api';
+import { createCredentialDefinition, getCredentialDefinition, sendMessage } from './../../api_v1';
 import { Request, Response } from "express";
-import { apiFetch } from "../utils/network-call";
-import { createSchema, getSchema, getWalletDids } from "../api";
+import { apiFetch } from "../../utils/network-call";
+import { createSchema, getSchema, getWalletDids } from "../../api_v1";
 import { BaseAgent } from './agent.base';
 
 export class AgentBasicController extends BaseAgent {

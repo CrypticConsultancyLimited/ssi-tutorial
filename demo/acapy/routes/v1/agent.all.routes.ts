@@ -1,9 +1,9 @@
 import express from 'express';
 
-import { ConnectionController } from '../controllers/connection.controller';
-import { AgentBasicController } from '../controllers/agent.basic.controller';
-import { CredentialController } from '../controllers/credential.controller';
-import { ProofController } from '../controllers/proof.controller';
+import { ConnectionController } from '../../controllers/v1/connection.controller';
+import { AgentBasicController } from '../../controllers/v1/agent.basic.controller';
+import { CredentialController } from '../../controllers/v1/credential.controller';
+import { ProofController } from '../../controllers/v1/proof.controller';
 const router = express.Router();
 
 

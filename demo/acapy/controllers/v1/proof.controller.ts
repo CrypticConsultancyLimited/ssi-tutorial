@@ -1,9 +1,9 @@
 import { BaseAgent } from "./agent.base";
 import { Request, Response } from "express";
-import { apiFetch } from "../utils/network-call";
-import { getProofRequest, sendProofRequest, sendProofRequest_2 } from "../api";
-import { agentType } from "../server";
-import { PredicateProps } from "../types";
+import { apiFetch } from "../../utils/network-call";
+import { getProofRequest, sendProofRequest, sendProofRequest_2 } from "../../api_v1";
+import { agentType } from "../../server";
+import { PredicateProps } from "../../types";
 
 export class ProofController extends BaseAgent {
   static async sendProofRequest(req: Request, res: Response){
@@ -38,7 +38,7 @@ export class ProofController extends BaseAgent {
   
     try {
 
-      const result = await apiFetch(sendProofRequest, 'POST', {connection_id: connectionId, proof_request: {requested_attributes: attributes, requested_predicates: predicates}});
+      const result = await apiFetch(sendProofRequest, 'POST', {connection_id: connectionId, proof_request: {requested_attributes: attributes, requested_predicates: predicates, version}});
 
       // const result = await apiFetch(sendProofRequest_2, 'POST', 
       //   {
@@ -47,7 +47,8 @@ export class ProofController extends BaseAgent {
       //       anoncreds: {
       //         name: proofRequestlabel, 
       //         requested_attributes: attributes, 
-      //         requested_predicates: predicates
+      //         requested_predicates: predicates,
+      //         version: version
       //       }
       //     }
       //   }

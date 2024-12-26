@@ -11,7 +11,11 @@
   - [👤 Holder](#2-holder-you)
   - [✅ Verifier](#3-verifier-the-checker)
 - [⚙️ Technical Workflow](#️-technical-workflow-of-ssi-entities)
-- [🚀 Setup Guide](#-demonstration-setup-guide)
+- [🚀 Demonstration Setup Guide](#-demonstration-setup-guide)
+   - [Framework Comparison](#-framework-comparison)
+   - [Similarities](#-similarities)
+   - [Differences](#-differences)
+   - [Testing Setup](#-testing-the-setup)
 - [📚 API Overview](#-api-overview)
 - [🎉 Conclusion](#conclusion)
 
@@ -273,108 +277,80 @@ _Think of this as an employer or any organization that needs to verify your cred
 
 <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
 
-### 📁 Directory Structure
+We will use two different frameworks (Credo and ACAPY) to demonstrate the SSI workflow.
 
-```
-/
-├── demo/
-│   ├── acapy/
-│   │
-│   └── credo/
-│
-└── interface/
-```
 
-### ⚙️ Prerequisites
+### 🔄 Framework Comparison
 
-<div style="border-left: 4px solid #007bff; padding-left: 20px; margin: 15px 0;">
+#### ACApy (Aries Cloud Agent Python)
+- **Language**: Python
+- **Focus**: Enterprise-grade SSI solutions
+- **Key Features**:
+  - Robust credential management
+  - Advanced protocol support
+  - Extensive configuration options
+  - Two API versions (v1 and v2)
+- **[Detailed Setup Guide](demo/acapy/README.md)**
 
-- Node.js (v18)
-- Yarn package manager
-- Git
-
-</div>
-
-### 🔧 Credo Agent Setup (demo/credo)
-
-```bash
-# Navigate to credo directory
-cd demo/credo
-
-# Install dependencies
-yarn install
-
-# Environment Setup
-cp .env.example .env
-
-# Configure .env file
-ISSUER_DID=your_issuer_did
-ISSUER_SEED=your_issuer_seed
-VERIFIER_DID=your_verifier_did
-VERIFIER_SEED=your_verifier_seed
-ISSUER_API_PORT=4000
-VERIFIER_API_PORT=4002
-ISSUER_AGENT_PUBLIC_ENDPOINT=http://{ your ip address }:4000
-VERIFIER_AGENT_PUBLIC_ENDPOINT=http://{ your ip address }:4002
-```
-
-### 💻 Interface Setup
-
-```bash
-# Navigate to interface directory
-cd interface
-
-# Install dependencies
-yarn install
-
-# Environment Setup
-cp .env.example .env
-
-# Configure .env file
-NEXT_PUBLIC_ISSUER_AGENT_URL=http://{ your ip address }:4001
-NEXT_PUBLIC_VERIFIER_AGENT_URL=http://{ your ip address }:4002
-NEXT_PUBLIC_ISSUER_LABEL="University"
-NEXT_PUBLIC_VERIFIER_LABEL="Employer"
-
-# Start the development server
-yarn dev
-```
-
-### 📱Mobile Wallet Setup
-
-Download Bifold app from the following link: <a href="https://drive.google.com/uc?export=download&id=10Qv5FNXOsp6-kyafJefXYYSe_v5bpfuq">Click here</a>
-
-Install the app on your phone and login to the app creating a 6 digit pin. You can use this wallet for:
-
-- Beign connected with other entities (Issuer / Verifier).
-- Sending message to other parties.
-- Storing credentials.
-- Presenting proof.
-- Making your own invitation qr to share with other parties.
-- And many more (Explore yourself ... 😉)
+#### Credo (Aries Framework JavaScript)
+- **Language**: JavaScript/TypeScript
+- **Focus**: Modern web and mobile SSI solutions
+- **Key Features**:
+  - Easy web integration
+  - Mobile-friendly
+  - Modern JavaScript ecosystem
+- **[Detailed Setup Guide](demo/credo/README.md)**
 
 <br>
 
-## 🎮 Running the Demo
+### 🎯 Similarities
+1. **Core Functionality**
+   - DID management
+   - Credential issuance
+   - Proof verification
+   - Connection protocols
 
-#### 1️⃣ Start Credo Agents
+2. **Standards Compliance**
+   - W3C DID specifications
+   - Verifiable Credentials
+   - DIDComm protocols
 
-```bash
-# In demo/credo directory
-# Start issuer agent
-yarn start --issuer
+3. **Security Features**
+   - Secure messaging
+   - Encryption standards
+   - Key management
 
-# In a new terminal
-# Start verifier agent
-yarn start --verifier
-```
+<br>
 
-#### 2️⃣ Launch Interface
+### 🔄 Differences
 
-```bash
-# In interface directory
-yarn dev
-```
+| Feature | ACApy | Credo |
+|---------|-------|-------|
+| **Language** | Python | JavaScript |
+| **API Versions** | v1 and v2 | Single version |
+| **Setup Complexity** | More complex | Simpler |
+| **Target Use** | Enterprise | Web/Mobile |
+
+
+<br>
+
+### 🎯 Common Issues & Solutions in Setup
+
+1. **Connection Issues**
+   - Ensure ngrok is running and URL is correctly set
+   - Check if ports are not in use
+   - Verify network connectivity
+
+2. **Wallet Errors**
+   - Clear previous wallet data if exists
+   - Check permissions and storage
+
+3. **Ledger Connection**
+   - Verify genesis URL is accessible
+   - Check network connectivity
+
+</div>
+
 
 ### 🧪 Testing the Setup
 
@@ -403,11 +379,28 @@ yarn dev
 
 </div>
 
-</div>
-
 ## 🚀 API Overview
 
 This API provides endpoints for managing agents, credentials, and interactions in an SSI ecosystem. Below are the key routes defined in `server.ts`.
+
+ACAPY provides two API versions (v1 and v2) with different features and capabilities.
+
+### API Versions for ACAPY
+
+#### 🔷 Version 1 (v1)
+The legacy API version, still widely used and supported.
+```bash
+# Base URL format
+http://localhost:{port}/v1/
+```
+
+#### 🔷 Version 2 (v2)
+The newer API version with enhanced features and improved consistency.
+```bash
+# Base URL format
+http://localhost:{port}/v2/
+```
+
 
 ## 🗂️ **API Routes**
 

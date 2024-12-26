@@ -22,6 +22,7 @@ const EstablishConenction = ({
 }) => {
   const [connectionQrCode, setConnectionQrCode] = useState(null);
   const [oobId, setOobId] = useState(null);
+  const [connection_id, setConnection_Id] = useState(null);
   const [showLoading, setShowLoading] = useState(false);
   const [timeLeft, setTimeLeft] = useState(180);
   const router = useRouter();
@@ -36,9 +37,18 @@ const EstablishConenction = ({
           domain: `${process.env.NEXT_PUBLIC_API_URL}`,
         }
       );
-      setOobId(response.data.invitation.id);
+
+      console.log('Response: ', JSON.stringify(response));
+      console.log('oob id: ', response.data.invitation['@id']);
+
+      setOobId(response.data.invitation.id ?? response.data.invitation['@id']);
+      if(response.data.invitation['@id']){
+        setConnectionId(response.data.connection_id);
+        setConnection_Id(response.data.connection_id);
+      }
+
       QRCode.toDataURL(
-        response.data.invitationUrl,
+        response.data.invitationUrl ?? response.data.invitation_url,
         {
           color: {
             dark: "#000000",
@@ -59,6 +69,16 @@ const EstablishConenction = ({
 
   const getConnectionStatus = async (outOfBandId) => {
     try {
+
+      if(connection_id){
+        const response_acapy = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/connections?connectionId=${connection_id}`
+        );
+        console.log(response_acapy);
+  
+        return response_acapy;
+      }
+
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/connections?outOfBandId=${outOfBandId}`
       );
@@ -77,10 +97,13 @@ const EstablishConenction = ({
       try {
         if (oobId) {
           const resp = await getConnectionStatus(oobId);
-          if (resp.data.length > 0) {
-            const state = resp.data[0].state;
-            const id = resp.data[0].id;
-            if (state === "completed") {
+
+          if (resp && (resp.data.length > 0 || resp.data)) {
+            const state = connection_id ? resp.data.state : resp.data[0].state;
+            console.log('State: ', state);
+
+            const id = connection_id ? resp.data.connection_id : resp.data[0].id;
+            if (state === "completed" || state === "active") {
               console.log(id);
               isVerifier
                 ? localStorage.setItem("verifier_connection_id", id)
