@@ -377,6 +377,13 @@ We will use two different frameworks (Credo and ACAPY) to demonstrate the SSI wo
 - Share proof from the Bifold wallet
 - Verify received proof
 
+### 🎥 
+
+<video width="600" controls>
+  <source src="./demo/acapy/assets/full-demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 </div>
 
 ## 🚀 API Overview
