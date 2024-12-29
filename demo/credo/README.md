@@ -67,10 +67,7 @@ yarn install
 cp .env.example .env
 
 # Configure .env file
-NEXT_PUBLIC_ISSUER_AGENT_URL=http://{ your ip address }:4001
-NEXT_PUBLIC_VERIFIER_AGENT_URL=http://{ your ip address }:4002
-NEXT_PUBLIC_ISSUER_LABEL="University"
-NEXT_PUBLIC_VERIFIER_LABEL="Employer"
+NEXT_PUBLIC_API_URL=http://{ your ip address }:4000
 
 # Start the development server
 yarn dev

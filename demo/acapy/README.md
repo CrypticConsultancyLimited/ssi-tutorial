@@ -28,6 +28,7 @@ ACAPY is a Python-based framework for building Self-Sovereign Identity (SSI) sol
 
 - Docker (>=v24.0.1)
 - Node.js (>=v16)
+- Python (>=3.12)
 - Yarn (>=v1.22.22)
 - Git
 - Ngrok
@@ -93,10 +94,13 @@ yarn install
 cp .env.example .env
 
 # Configure .env file
-NEXT_PUBLIC_ISSUER_AGENT_URL=http://{ your ip address }:4001
-NEXT_PUBLIC_VERIFIER_AGENT_URL=http://{ your ip address }:4002
-NEXT_PUBLIC_ISSUER_LABEL="University"
-NEXT_PUBLIC_VERIFIER_LABEL="Employer"
+
+# If you use API version V2 (highly recommended), then: 
+NEXT_PUBLIC_API_URL=http://{ your ip address }:4002/v2
+
+# If you use API version V1 (not recommended), then: 
+NEXT_PUBLIC_API_URL=http://{ your ip address }:4002/v1
+
 
 # Start the development server
 yarn dev
