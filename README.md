@@ -18,6 +18,7 @@
    - [Testing Setup](#-testing-the-setup)
 - [📚 API Overview](#-api-overview)
 - [🎉 Conclusion](#conclusion)
+- [📧 Contact](#-contact)
 
 ![SSI Banner](demo/credo/assets/what-is-ssi.png)
 
@@ -595,10 +596,10 @@ Feel free to contribute to this project! If you have any issues or suggestions, 
 
 ---
 
-### 📞 **Contact**
+## 📧 Contact
 
 For questions or support, reach out to **Cryptic Consultancy Limited**! ![pistol](demo/credo/assets/pistol.png)
-
+- You can mail us through [contact@cryptic-consultancy.co.uk](mailto:contact@cryptic-consultancy.co.uk)
 ---
 
 Made with ❤️ for the SSI community!
