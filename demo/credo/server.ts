@@ -6,6 +6,7 @@ import { PredicateProps } from "types";
 dotenv.config();
 
 console.log(process.argv[2]);
+console.log('issuer agent public endpoint: ', process.env.ISSUER_AGENT_PUBLIC_ENDPOINT);
 const agentType = process.argv[2];
 const port =
   agentType === "--issuer"
@@ -99,8 +100,9 @@ app.get("/wallet-dids", async (req: Request, res: Response) => {
 
 app.post("/create-invitation", async (req: Request, res: Response) => {
   const { label, alias, domain } = req.body;
+  const agent_domain = process.env.ISSUER_AGENT_PUBLIC_ENDPOINT ?? `http://localhost:${port+1}`;
   try {
-    const result = await agent.createInvitation({ label, alias, domain });
+    const result = await agent.createInvitation({ label, alias, domain: agent_domain });
     res.status(200).send(result);
   } catch (error) {
     res.status(500).send({ error: error.message });

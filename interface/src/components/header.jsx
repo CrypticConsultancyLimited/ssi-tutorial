@@ -9,8 +9,16 @@ import {
   Card,
 } from "@material-tailwind/react";
 
+import { usePathname } from "next/navigation";
+
+
 export function Header() {
   const [openNav, setOpenNav] = React.useState(false);
+  const pathName = usePathname();
+  let agentType;
+
+  if(pathName == '/') agentType = 'issuer';
+  else if(pathName == '/verifier') agentType = 'verifier'
 
   React.useEffect(() => {
     window.addEventListener(
@@ -75,13 +83,24 @@ export function Header() {
           >
             SSI Trust Triangle
           </Typography>
-          <Typography
+          {agentType == 'issuer' && (
+            <Typography
+              as="a"
+              href="/verifier"
+              className="mr-4 cursor-pointer py-1.5 font-bold text-[20px]  rounded-lg px-4 text-white bg-gray-500  hover:text-white hover:bg-blue-700"
+            >
+              Use Verifier
+            </Typography>
+          )}
+          {agentType == 'verifier' && (
+            <Typography
             as="a"
-            href="/verifier"
+            href="/"
             className="mr-4 cursor-pointer py-1.5 font-bold text-[20px]  rounded-lg px-4 text-white bg-gray-500  hover:text-white hover:bg-blue-700"
           >
-            Use Verifier
+            Use Issuer
           </Typography>
+          )}
         </div>
       </Navbar>
     </div>

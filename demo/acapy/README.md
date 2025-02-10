@@ -37,11 +37,13 @@ ACAPY is a Python-based framework for building Self-Sovereign Identity (SSI) sol
 
 ### 🔧 ACAPY Agent Setup (demo/acapy)
 
+In our setup, the ACA-Py agent and the server need to be started separately. However, with Credo, launching the Credo server (demo/credo) automatically starts the agent as well.
+
 ```bash
 # add 8020 port to ngrok
 ngrok http 8020
 
-# Clone ACAPY repository
+# Clone ACAPY repository 
 git clone -b 0.12.3 https://github.com/openwallet-foundation/acapy.git
 
 # Navigate to demo folder of ACAPY directory
@@ -68,24 +70,33 @@ LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io AGETN_ENDPOINT=https://{your ng
 ### Server setup
 
 ``` bash
+
+# Clone the ssi-tutorial repository 
+git clone -b credo-acapy https://github.com/CrypticConsultancyLimited/ssi-tutorial.git
+
 # Navigate to ssi-tutorial/demo/acapy
 cd ssi-tutorial/demo/acapy
+
+# Environment Setup
+cp .env.example .env
+
+# Configure environment variables in .env file
 
 # Install dependencies
 yarn install
 
 # Start server as issuer/verifier
-yarn start --issuer
+yarn issuer
 # or
-yarn start --verifier
+yarn verifier
 
 ```
 
 ### 💻 Interface Setup
 
 ```bash
-# Navigate to interface directory
-cd interface
+# Navigate to interface directory 
+cd ssi-tutorial/interface
 
 # Install dependencies
 yarn install
@@ -98,9 +109,11 @@ cp .env.example .env
 # If you use API version V2 (highly recommended), then: 
 NEXT_PUBLIC_API_URL=http://{ your ip address }:4002/v2
 
+# OR,
 # If you use API version V1 (not recommended), then: 
 NEXT_PUBLIC_API_URL=http://{ your ip address }:4002/v1
 
+# !! Use only one at a time. Either version v1 (not recommended) or v2 (recommended)
 
 # Start the development server
 yarn dev
@@ -120,27 +133,6 @@ Install the app on your phone and login to the app creating a 6 digit pin. You c
 - And many more (Explore yourself ... 😉)
 
 <br>
-
-## 🎮 Running the Demo
-
-#### 1️⃣ Start Credo Agents
-
-```bash
-# In demo/credo directory
-# Start issuer agent
-yarn start --issuer
-
-# In a new terminal
-# Start verifier agent
-yarn start --verifier
-```
-
-#### 2️⃣ Launch Interface
-
-```bash
-# In interface directory
-yarn dev
-```
 
 - **[Testing Guide](../../README.md#-testing-the-setup)**
 

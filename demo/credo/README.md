@@ -33,9 +33,37 @@ Credo (formerly Aries Framework JavaScript) is a TypeScript/JavaScript framework
 
 ### 🔧 Credo Agent Setup (demo/credo)
 
+Install Ngrok first and get authtoken from their website.
+
 ```bash
+# To start ngrok on port 4001 and 4002, edit the ngrok.yml
+nano /home/{your-user-name}/.ngrok2/ngrok.yml
+```
+Edit the ngrok.yml file as following:
+```
+authtoken: your-ngrok-authtoken
+version: "2"
+tunnels:
+    first:
+        addr: 4001
+        proto: http
+    second:
+        addr: 4002
+        proto: http
+```
+
+Save the file by pressing ctrl+O and exit the nano by ctrl+x.
+Now start the ngrok:
+```ngrok start --all```
+
+Then:
+
+```bash
+# Clone the ssi-tutorial repository 
+git clone -b credo-acapy https://github.com/CrypticConsultancyLimited/ssi-tutorial.git
+
 # Navigate to credo directory
-cd demo/credo
+cd ssi-tutorial/demo/credo
 
 # Install dependencies
 yarn install
@@ -48,10 +76,12 @@ ISSUER_DID=your_issuer_did
 ISSUER_SEED=your_issuer_seed
 VERIFIER_DID=your_verifier_did
 VERIFIER_SEED=your_verifier_seed
+# You can use ISSUER_DID, ISSUER_SEED, VERIFIER_DID, VERIFIER_SEED as same as in .env.sample file
+
 ISSUER_API_PORT=4000
 VERIFIER_API_PORT=4002
-ISSUER_AGENT_PUBLIC_ENDPOINT=http://{ your ip address }:4000
-VERIFIER_AGENT_PUBLIC_ENDPOINT=http://{ your ip address }:4002
+ISSUER_AGENT_PUBLIC_ENDPOINT={ngrok url of port 4001 without brackets}
+VERIFIER_AGENT_PUBLIC_ENDPOINT={ngrok url of port 4002 without brackets}
 ```
 
 ### 💻 Interface Setup
@@ -67,7 +97,7 @@ yarn install
 cp .env.example .env
 
 # Configure .env file
-NEXT_PUBLIC_API_URL=http://{ your ip address }:4000
+NEXT_PUBLIC_API_URL=http://localhost:4000
 
 # Start the development server
 yarn dev
@@ -95,11 +125,11 @@ Install the app on your phone and login to the app creating a 6 digit pin. You c
 ```bash
 # In demo/credo directory
 # Start issuer agent
-yarn start --issuer
+yarn issuer
 
 # In a new terminal
 # Start verifier agent
-yarn start --verifier
+yarn verifier
 ```
 
 #### 2️⃣ Launch Interface

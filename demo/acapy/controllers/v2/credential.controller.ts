@@ -1,4 +1,4 @@
-import { BaseAgent } from './agent.base';
+import BaseAgent from './agent.base';
 import { Request, Response } from 'express';
 import { apiFetch } from '../../utils/network-call';
 import { getIssuedCredential, issueCredential } from '../../api_v2';
@@ -71,7 +71,7 @@ export class CredentialController extends BaseAgent {
         res.status(500).send({ error: 'issuing credential failed' });
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error: ", JSON.stringify(error.message));
       res.status(500).send({ error: error.message });
     }
   }

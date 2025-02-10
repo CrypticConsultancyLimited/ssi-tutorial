@@ -1,4 +1,4 @@
-import { BaseAgent } from "./agent.base";
+import BaseAgent from "./agent.base";
 import { Request, Response } from "express";
 import { apiFetch } from "../../utils/network-call";
 import { getIssuedCredential, issueCredential } from "../../api_v1";

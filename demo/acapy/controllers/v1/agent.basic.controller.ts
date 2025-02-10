@@ -3,7 +3,7 @@ import { createCredentialDefinition, getCredentialDefinition, sendMessage } from
 import { Request, Response } from "express";
 import { apiFetch } from "../../utils/network-call";
 import { createSchema, getSchema, getWalletDids } from "../../api_v1";
-import { BaseAgent } from './agent.base';
+import BaseAgent from './agent.base';
 
 export class AgentBasicController extends BaseAgent {
   static async getWalletDids(req: Request, res: Response){

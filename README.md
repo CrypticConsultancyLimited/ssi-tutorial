@@ -105,7 +105,7 @@
 ### 1. 🏛️ Issuer
 
 <div style="border-left: 4px solid #007bff; padding-left: 20px; margin: 15px 0;">
-_Think of this as a university, government, or any organization that issues official documents_
+Think of this as a university, government, or any organization that issues official documents
 </div>
 
 #### What They Do:
@@ -132,7 +132,7 @@ _Think of this as a university, government, or any organization that issues offi
 ### 2. 👤 Holder (You)
 
 <div style="border-left: 4px solid #28a745; padding-left: 20px; margin: 15px 0;">
-_This is you - the person who receives and owns the credentials_
+This is you - the person who receives and owns the credentials
 </div>
 
 #### What You Can Do:
@@ -159,7 +159,7 @@ _This is you - the person who receives and owns the credentials_
 ### 3. ✅ Verifier (The Checker)
 
 <div style="border-left: 4px solid #dc3545; padding-left: 20px; margin: 15px 0;">
-_Think of this as an employer or any organization that needs to verify your credentials_
+Think of this as an employer or any organization that needs to verify your credentials
 </div>
 
 #### What They Do:
@@ -278,7 +278,7 @@ _Think of this as an employer or any organization that needs to verify your cred
 
 <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
 
-We will use two different frameworks (Credo and ACAPY) to demonstrate the SSI workflow.
+We will use two different frameworks (Credo and ACAPY) to demonstrate the SSI workflow. Use any one of them. 
 
 
 ### 🔄 Framework Comparison
@@ -364,15 +364,19 @@ We will use two different frameworks (Credo and ACAPY) to demonstrate the SSI wo
 
 #### 2. 📜 Issue Credential
 
-- Issue a credential to connection (Bifold wallet)
+- Issuer will send a credential offer to your connected wallet (Bifold wallet)
 
 #### 3. ✅ Accept Credential
 
-- Accept credential from the wallet
+- Open the credential offer and accept credential from the wallet
 
 #### 4. 🔍 Verify Credential
+- An issuer also can act as a verifier. Because sometimes issuer needs to verify your issued credential.
+- In this setup, issuer will send you a credential proof request after credential issuance.
+- Share your credential in the proof request.
 
-- Generate invitation from verifier interface
+Or, if you want to use different verifier:
+- Generate invitation from verifier agent
 - Scan the generated QR code by Bifold wallet (Holder's wallet)
 - Send proof request to the holder
 - Share proof from the Bifold wallet

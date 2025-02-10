@@ -39,9 +39,11 @@ const EstablishConenction = ({
       );
 
       console.log('Response: ', JSON.stringify(response));
-      console.log('oob id: ', response.data.invitation['@id']);
+      console.log('oob id: ', response.data.invitation.id ?? response.data.invitation['@id']);
 
       setOobId(response.data.invitation.id ?? response.data.invitation['@id']);
+
+
       if(response.data.invitation['@id']){
         setConnectionId(response.data.connection_id);
         setConnection_Id(response.data.connection_id);
@@ -97,8 +99,8 @@ const EstablishConenction = ({
       try {
         if (oobId) {
           const resp = await getConnectionStatus(oobId);
-
-          if (resp && (resp.data.length > 0 || resp.data)) {
+          console.log('Response of connection status: ', JSON.stringify(resp));
+          if (resp && (resp.data.length > 0 || (resp.data && connection_id))) {
             const state = connection_id ? resp.data.state : resp.data[0].state;
             console.log('State: ', state);
 
@@ -136,6 +138,7 @@ const EstablishConenction = ({
   useEffect(() => {
     (async () => {
       if (oobId === null) await generateQR();
+      console.log('oobId: ', oobId);
       if (oobId) {
         const cleanup = connectionStatusCheck(oobId);
         return cleanup;
