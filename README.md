@@ -606,4 +606,6 @@ For questions or support, reach out to **Cryptic Consultancy Limited**! ![pistol
 - You can mail us through [contact@cryptic-consultancy.co.uk](mailto:contact@cryptic-consultancy.co.uk)
 ---
 
-Made with ❤️ for the SSI community!
+Made with ❤️ for the SSI community by [Cryptic Consultancy Limited (CCL)](https://cryptic-consultancy.co.uk/). 
+
+CCL is a London-based startup providing research and development conslutancy services on SSI, Federated Identity and Blockchain. We have a strong track record of develivering high quality solutions for challenging problems in the intersection of SSI, Federated Identity and Blockchain.
