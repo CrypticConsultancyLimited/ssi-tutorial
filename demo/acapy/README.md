@@ -46,6 +46,14 @@ ngrok http 8020
 # Clone ACAPY repository 
 git clone -b 0.12.3 https://github.com/openwallet-foundation/acapy.git
 
+```
+
+Now, we have to change few things:
+**Change asyncpg version**
+Go to ```demo/requirements.txt``` file. Change the asyncpg version from ```0.26.0``` to ```0.28.0```. 
+
+No open the terminal again, and do:
+```bash
 # Navigate to demo folder of ACAPY directory
 cd acapy/demo
 

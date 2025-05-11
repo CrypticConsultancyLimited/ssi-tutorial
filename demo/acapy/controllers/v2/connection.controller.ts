@@ -1,7 +1,7 @@
 import BaseAgent from './agent.base';
 import { Request, Response } from 'express';
 import { apiFetch } from '../../utils/network-call';
-import { createConnection, getConnection } from '../../api_v1';
+import { createConnection, getConnection } from '../../api_v2';
 
 export class ConnectionController extends BaseAgent {
   static async createInvitation(req: Request, res: Response) {
