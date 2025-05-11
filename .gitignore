@@ -1,1 +1,4 @@
 **/.yarn/cache
+
+.env
+node_modules
