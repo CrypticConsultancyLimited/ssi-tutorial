@@ -3,6 +3,7 @@ import { BaseAgent } from "./agent";
 import cors from "cors";
 import dotenv from "dotenv";
 import { PredicateProps } from "types";
+import { AnonCredsRequestedAttribute, AnonCredsRequestedPredicate } from "@credo-ts/anoncreds";
 dotenv.config();
 
 console.log(process.argv[2]);
@@ -56,31 +57,55 @@ const initializeAgent = async () => {
 
       const schemaTemplate = {
         name: "cryptic",
-        version: `1.1.${Math.floor(Math.random() * 100)}`,
+        version: `1.1.3`,
         attrNames: ["name", "age", "email", "department"],
         issuerId: agentDid,
       };
 
-      const schemaResp = await agent.createSchema(agentDid, schemaTemplate);
-      console.log(schemaResp);
-      if (schemaResp.schemaState.state !== "finished") {
-        throw new Error("Schema creation error: " + JSON.stringify(schemaResp));
-      }
-      const schemaId = schemaResp.schemaState.schemaId;
+      let schemaId: string;
 
-      const credDefResp = await agent.createCredentialDefinition(
-        agentDid,
-        schemaId,
-        "bachelor degree"
-      );
-      console.log(credDefResp);
-      if (credDefResp.credentialDefinitionState.state !== "finished") {
-        throw new Error(
-          "Credential definition creation error: " + JSON.stringify(credDefResp)
-        );
+      //* checking existing schema
+      const existingSchema = await agent.getSchema(undefined, schemaTemplate, agentDid);
+
+      if(existingSchema.length > 0) {
+        console.log('schema found: ', JSON.stringify(existingSchema[0].schemaId));
+        schemaId = existingSchema[0].schemaId;
       }
-      credentialDefinitionId =
-        credDefResp.credentialDefinitionState.credentialDefinitionId;
+      
+      //* if not found, create new schema
+      else{
+        const schemaResp = await agent.createSchema(agentDid, schemaTemplate);
+        
+        if (schemaResp.schemaState.state !== "finished") {
+          throw new Error("Schema creation error: " + JSON.stringify(schemaResp));
+        }
+        schemaId = schemaResp.schemaState.schemaId;
+      }
+
+      //* checking existing credentialDefinition
+      const existingCredDef = await agent.getCredentialDefinition(undefined, {schemaId, issuerId: agentDid, tag: "student id"})
+
+      if(existingCredDef.length > 0){
+        console.log('credDef found: ', JSON.stringify(existingCredDef[0].credentialDefinitionId));
+        credentialDefinitionId = existingCredDef[0].credentialDefinitionId;
+      }
+
+      //* if not found, create new credentialDefinition
+      else{
+        const credDefResp = await agent.createCredentialDefinition(
+          agentDid,
+          schemaId,
+          "student id"
+        );
+        console.log(credDefResp);
+        if (credDefResp.credentialDefinitionState.state !== "finished") {
+          throw new Error(
+            "Credential definition creation error: " + JSON.stringify(credDefResp)
+          );
+        }
+        credentialDefinitionId =
+          credDefResp.credentialDefinitionState.credentialDefinitionId;
+      }
     }
   } catch (error) {
     console.error("Error initializing BaseAgent:", error);
@@ -272,26 +297,50 @@ app.get("/issued-credentials", async (req: Request, res: Response) => {
 
 app.post("/send-proof-request", async (req: Request, res: Response) => {
   const { proofRequestlabel, connectionId, version } = req.body;
-  const attributes = {
-    name: {
-      names: ["department"],
-      restriction:
-        agentType === "--issuer"
-          ? [{ cred_def_id: credentialDefinitionId }]
+  console.log('bracu cred def: ', process.env.BRACU_CRED_DEF);
+  //* working
+  // const attributes = {
+  //   attr_ref_2: {
+  //     names: ["registrationNo", "cgpa"],
+  //     restriction:
+  //     [{ cred_def_id: process.env.BRACU_CRED_DEF }],
+  //   },
+  //   attr_ref_1: {
+  //     names: ["email"],
+  //     restriction:
+  //       agentType === "--issuer"
+  //         ? [{ cred_def_id: credentialDefinitionId }]
+  //         : [],
+  //   },
+  // };
+
+  const attributes: Record<string, AnonCredsRequestedAttribute> = {
+    attr_ref_1: {
+      names: ["name", "email"],
+      restrictions:
+        agentType === "--issuer" 
+          ? [{ cred_def_id: process.env.BRACU_CRED_DEF  }] // certificate cred def
           : [],
     },
+    attr_ref_2: {
+      names: ["registrationNo", "cgpa"],
+      restrictions:
+      [{ cred_def_id:  credentialDefinitionId}], // student id cred def
+    }
   };
-  const predicates: PredicateProps = {
-    name: {
+
+  const predicates: Record<string, AnonCredsRequestedPredicate> = {
+    pred1_referent: {
       name: "age",
       p_type: ">=",
       p_value: 20,
-      restriction:
+      restrictions:
         agentType === "--issuer"
           ? [{ cred_def_id: credentialDefinitionId }]
           : [],
     },
   };
+
   if (!proofRequestlabel) {
     return res.status(400).send({ error: "proofRequestlabel is required" });
   }
@@ -309,6 +358,7 @@ app.post("/send-proof-request", async (req: Request, res: Response) => {
     });
     res.status(200).send(result);
   } catch (error) {
+    console.log(error);
     res.status(500).send({ error: error.message });
   }
 });
