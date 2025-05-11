@@ -6,16 +6,18 @@
 
 ```
 /
-├── demo/
-│   ├── acapy/
-│   │
-│   └── credo/
-│
-└── interface/
+├── acapy/           # OpenWallet 
+├── ssi-tutorial/    # This repository
+│   ├── demo/
+│   │   ├── acapy/
+│   │   └── credo/
+│   └── interface/
 ```
 
 ## What is ACAPY?
+
 ACAPY is a Python-based framework for building Self-Sovereign Identity (SSI) solutions. It provides:
+
 - 🔐 Secure credential management
 - 🤝 Agent-to-agent communication
 - 📜 Verifiable credential issuance and verification
@@ -40,17 +42,17 @@ ACAPY is a Python-based framework for building Self-Sovereign Identity (SSI) sol
 In our setup, the ACA-Py agent and the server need to be started separately. However, with Credo, launching the Credo server (demo/credo) automatically starts the agent as well.
 
 ```bash
-# add 8020 port to ngrok
+# Assuming Ngrok is already installed in your device, add 8020 port to ngrok 
 ngrok http 8020
 
-# Clone ACAPY repository 
+# Clone Official ACAPY repository of Openwallets
 git clone -b 0.12.3 https://github.com/openwallet-foundation/acapy.git
 
 # Navigate to demo folder of ACAPY directory
 cd acapy/demo
 
 # Install requirements
-pip3 install -r requirements.txt
+pip3 install -r requirements.txt 
 
 # Run ACAPY demo agent
 LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io ./run_demo faber
@@ -69,7 +71,7 @@ LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io AGETN_ENDPOINT=https://{your ng
 
 ### Server setup
 
-``` bash
+```bash
 
 # Clone the ssi-tutorial repository 
 git clone -b credo-acapy https://github.com/CrypticConsultancyLimited/ssi-tutorial.git
@@ -121,7 +123,7 @@ yarn dev
 
 ### 📱Mobile Wallet Setup
 
-Download Bifold app from the following link: <a href="https://drive.google.com/uc?export=download&id=10Qv5FNXOsp6-kyafJefXYYSe_v5bpfuq">Click here</a>
+Download Bifold app from the following link: `<a href="https://drive.google.com/uc?export=download&id=10Qv5FNXOsp6-kyafJefXYYSe_v5bpfuq">`Click here`</a>`
 
 Install the app on your phone and login to the app creating a 6 digit pin. You can use this wallet for:
 
@@ -139,12 +141,12 @@ Install the app on your phone and login to the app creating a 6 digit pin. You c
 ### 💡 Best Practices
 
 1. **Version Selection:**
+
    - Use v2 for new projects
    - Stick to v1 if working with legacy systems
    - Don't mix versions in the same flow
-
 2. **Error Handling:**
+
    - V2 provides more detailed error messages
    - Implement proper error handling for both versions
    - Log version-specific issues separately
-

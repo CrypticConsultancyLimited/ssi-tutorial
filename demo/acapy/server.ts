@@ -16,8 +16,8 @@ export const agentType = process.argv[2];
 
 const port =
   agentType === '--issuer'
-    ? parseInt(process.env.ISSUER_API_PORT || '4000')
-    : parseInt(process.env.VERIFIER_API_PORT || '4002');
+    ? parseInt(process.env.ISSUER_API_PORT || '4002')
+    : parseInt(process.env.VERIFIER_API_PORT || '4003');
 
 const app = express();
 app.use(express.json());
@@ -35,7 +35,7 @@ async function initialize() {
     }
 
     // Start the server **only after** credDefId is assigned
-    app.use('/v1', all_routes_v1);
+    // app.use('/v1', all_routes_v1);
     app.use('/v2', all_routes_v2);
 
     app.listen(port, () => {
