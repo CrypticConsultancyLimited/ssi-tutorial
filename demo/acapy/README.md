@@ -118,10 +118,10 @@ cp .env.example .env
 # Update API URL in `.env`:
 
 # For API v2 (recommended)
-NEXT_PUBLIC_API_URL=http://{your_ip_address}:4002/v2
+NEXT_PUBLIC_API_URL=http://{your_ip_address}:4000/v2
 
 # For API v1 (not recommended)
-# NEXT_PUBLIC_API_URL=http://{your_ip_address}:4002/v1
+# NEXT_PUBLIC_API_URL=http://{your_ip_address}:4000/v1
 
 # Install dependencies
 yarn install

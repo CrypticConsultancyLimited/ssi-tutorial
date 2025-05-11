@@ -16,8 +16,8 @@ export const agentType = process.argv[2];
 
 const port =
   agentType === '--issuer'
-    ? parseInt(process.env.ISSUER_API_PORT || '4002')
-    : parseInt(process.env.VERIFIER_API_PORT || '4003');
+    ? parseInt(process.env.ISSUER_API_PORT || '4000')
+    : parseInt(process.env.VERIFIER_API_PORT || '4002');
 
 const app = express();
 app.use(express.json());
