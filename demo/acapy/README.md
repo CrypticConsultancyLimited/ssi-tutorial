@@ -95,7 +95,7 @@ git clone -b credo-acapy https://github.com/CrypticConsultancyLimited/ssi-tutori
 cd ssi-tutorial/demo/acapy
 
 # Environment setup
-cp .env.example .env
+cp .env.sample .env
 # Then edit `.env` with correct variables
 
 # Install dependencies
@@ -114,7 +114,7 @@ yarn verifier
 ```bash
 cd ssi-tutorial/interface
 
-cp .env.example .env
+cp .env.sample .env
 # Update API URL in `.env`:
 
 # For API v2 (recommended)
