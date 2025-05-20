@@ -1,6 +1,7 @@
 ## 🚀 Demonstration Setup Guide for Credo
 
 Credo (formerly Aries Framework JavaScript) is a TypeScript/JavaScript framework for building Self-Sovereign Identity (SSI) solutions. It provides:
+
 - 🌐 Modern web-based SSI implementation
 - 🔐 Secure credential management
 - 📱 Mobile-first architecture
@@ -37,9 +38,14 @@ Install Ngrok first and get authtoken from their website.
 
 ```bash
 # To start ngrok on port 4001 and 4002, edit the ngrok.yml
-nano /home/{your-user-name}/.ngrok2/ngrok.yml
+# First check the ngrok configuration file location
+ngrok config check #Copy the path
+# Now edit the configuration file 
+nano {copied path from previous response}
 ```
+
 Edit the ngrok.yml file as following:
+
 ```
 authtoken: your-ngrok-authtoken
 version: "2"
@@ -52,9 +58,9 @@ tunnels:
         proto: http
 ```
 
-Save the file by pressing ctrl+O and exit the nano by ctrl+x.
+Save the file by pressing ctrl+O then Enter and exit the nano by ctrl+x.
 Now start the ngrok:
-```ngrok start --all```
+``ngrok start --all``
 
 Then:
 
@@ -69,7 +75,7 @@ cd ssi-tutorial/demo/credo
 yarn install
 
 # Environment Setup
-cp .env.example .env
+cp .env.sample .env
 
 # Configure .env file
 ISSUER_DID=your_issuer_did
@@ -94,7 +100,8 @@ cd interface
 yarn install
 
 # Environment Setup
-cp .env.example .env
+cp .env.sample .env
+# Comment out the acapy version in the .env file (should be commented out by default)
 
 # Configure .env file
 NEXT_PUBLIC_API_URL=http://localhost:4000
@@ -105,7 +112,7 @@ yarn dev
 
 ### 📱Mobile Wallet Setup
 
-Download Bifold app from the following link: <a href="https://drive.google.com/uc?export=download&id=10Qv5FNXOsp6-kyafJefXYYSe_v5bpfuq">Click here</a>
+Download Bifold app from the following link: `<a href="https://drive.google.com/uc?export=download&id=10Qv5FNXOsp6-kyafJefXYYSe_v5bpfuq">`Click here`</a>`
 
 Install the app on your phone and login to the app creating a 6 digit pin. You can use this wallet for:
 
