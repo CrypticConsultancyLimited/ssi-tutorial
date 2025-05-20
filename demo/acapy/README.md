@@ -78,7 +78,7 @@ ngrok http 8020
 LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io ./run_demo faber
 
 # or you can set manual endpoint yourself:
-LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io AGETN_ENDPOINT=https://{ngrok_url} ./run_demo faber
+LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io AGENT_ENDPOINT=https://{ngrok_url} ./run_demo faber
 ```
 
 > 💡 **Troubleshooting tip:**
