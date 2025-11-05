@@ -31,8 +31,8 @@ export class BaseAgent {
             label: label,
             endpoints: this.endpoints,
             walletConfig: {
-                key: crypto.randomBytes(32).toString('hex'),
-                id: `wallet-${this.label}-${crypto.randomUUID()}`,
+                key: 'ssi-tutorial-key-2',
+                id: `wallet-${this.label}-2`,
 
             }
         } satisfies InitConfig
@@ -55,6 +55,10 @@ export class BaseAgent {
 
             this.agent.events.on<ProofStateChangedEvent>(ProofEventTypes.ProofStateChanged, async (event) => {
                 console.log(`Proof Record State: ${event.payload.proofRecord.state}`);
+                if(event.payload.proofRecord.state=="done"){
+                    console.log("isVerified: ", event.payload.proofRecord.isVerified);
+                    console.log(JSON.stringify(await this.getProofData(event.payload.proofRecord.id)));
+                }
             })
 
             this.agent.events.on(
@@ -100,7 +104,8 @@ export class BaseAgent {
                     keyType: KeyType.Ed25519,
                     privateKey: seedBfr
                 }
-            ]
+            ],
+            overwrite: true
         })
 
     }
@@ -139,10 +144,18 @@ export class BaseAgent {
             }
         })
     }
-    public async getSchema(schemaId?: string) {
+    public async getSchema(schemaId?: string, schema?: AnonCredsSchema, did?: string,  ) {
         if (schemaId) {
             return await this.agent.modules.anoncreds.getCreatedSchemas({
                 schemaId
+            })
+        }
+
+        else if(schema && did){
+            return await this.agent.modules.anoncreds.getCreatedSchemas({
+                schemaName: schema.name,
+                schemaVersion: schema.version,
+                issuerId: did
             })
         }
         return await this.agent.modules.anoncreds.getCreatedSchemas({})
@@ -161,10 +174,18 @@ export class BaseAgent {
             },
         })
     }
-    public async getCredentialDefinition(credentialDefinitionId?: string) {
+    public async getCredentialDefinition(credentialDefinitionId?: string, credentialDefinition?: {schemaId: string, issuerId: string, tag: string}) {
         if (credentialDefinitionId) {
             return await this.agent.modules.anoncreds.getCreatedCredentialDefinitions({
                 credentialDefinitionId
+            })
+        }
+
+        else if(credentialDefinition){
+            return await this.agent.modules.anoncreds.getCreatedCredentialDefinitions({
+                schemaId: credentialDefinition.schemaId,
+                issuerId: credentialDefinition.issuerId,
+                tag: credentialDefinition.tag
             })
         }
         return await this.agent.modules.anoncreds.getCreatedCredentialDefinitions({})
