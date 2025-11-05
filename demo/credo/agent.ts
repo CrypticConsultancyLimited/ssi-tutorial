@@ -57,7 +57,7 @@ export class BaseAgent {
                 console.log(`Proof Record State: ${event.payload.proofRecord.state}`);
                 if(event.payload.proofRecord.state=="done"){
                     console.log("isVerified: ", event.payload.proofRecord.isVerified);
-                    console.log(JSON.stringify(await this.getProofData(event.payload.proofRecord.id)));
+                    // console.log(JSON.stringify(await this.getProofData(event.payload.proofRecord.id)));
                 }
             })
 

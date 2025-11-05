@@ -5,7 +5,7 @@ import { anoncreds } from '@hyperledger/anoncreds-nodejs';
 import { ariesAskar } from '@hyperledger/aries-askar-nodejs';
 import { AskarModule, AskarMultiWalletDatabaseScheme } from '@credo-ts/askar';
 import { indyVdr } from "@hyperledger/indy-vdr-nodejs";
-import { bcovrinTest } from "./network";
+import { bcovrinTest, indicioDemo } from "./network";
 
 
 export function baseAgentModule() {
@@ -19,7 +19,7 @@ export function baseAgentModule() {
         }),
         indyVdr: new IndyVdrModule({
             indyVdr,
-            networks: [bcovrinTest],
+            networks: [indicioDemo],
           }),
         dids: new DidsModule({
             resolvers: [new IndyVdrIndyDidResolver()],

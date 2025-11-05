@@ -57,7 +57,7 @@ const initializeAgent = async () => {
 
       const schemaTemplate = {
         name: "cryptic",
-        version: `1.1.3`,
+        version: `1.1.4`,
         attrNames: ["name", "age", "email", "department"],
         issuerId: agentDid,
       };
@@ -315,18 +315,18 @@ app.post("/send-proof-request", async (req: Request, res: Response) => {
   // };
 
   const attributes: Record<string, AnonCredsRequestedAttribute> = {
-    attr_ref_1: {
-      names: ["name", "email"],
+    name: {
+      names: ["department"],
       restrictions:
         agentType === "--issuer" 
           ? [{ cred_def_id: process.env.BRACU_CRED_DEF  }] // certificate cred def
           : [],
     },
-    attr_ref_2: {
-      names: ["registrationNo", "cgpa"],
-      restrictions:
-      [{ cred_def_id:  credentialDefinitionId}], // student id cred def
-    }
+    // attr_ref_2: { 
+    //   names: ["registrationNo", "cgpa"],
+    //   restrictions:
+    //   [{ cred_def_id:  credentialDefinitionId}], // student id cred def
+    // }
   };
 
   const predicates: Record<string, AnonCredsRequestedPredicate> = {
