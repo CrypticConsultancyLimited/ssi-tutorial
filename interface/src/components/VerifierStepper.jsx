@@ -33,7 +33,7 @@ export function VerifierStepper() {
         isFirstStep={(value) => setIsFirstStep(value)}
         className="mb-32"
       >
-        <Step onClick={() => setActiveStep(0)}>
+        <Step>
           <QrCodeIcon className="h-5 w-5" />
           <div className="absolute -bottom-[4.5rem] w-max text-center">
             <p
@@ -54,7 +54,7 @@ export function VerifierStepper() {
             </p>
           </div>
         </Step>
-        <Step onClick={() => setActiveStep(1)}>
+        <Step>
           <ShareIcon className="h-5 w-5" />
           <div className="absolute -bottom-[4.5rem] w-max text-center">
             <p
@@ -75,7 +75,7 @@ export function VerifierStepper() {
             </p>
           </div>
         </Step>
-        <Step onClick={() => setActiveStep(2)}>
+        <Step>
           <ClipboardDocumentListIcon className="h-5 w-5" />
           <div className="absolute -bottom-[4.5rem] w-max text-center">
             <p

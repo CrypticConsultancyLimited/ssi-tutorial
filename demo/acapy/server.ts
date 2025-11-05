@@ -35,7 +35,7 @@ async function initialize() {
     }
 
     // Start the server **only after** credDefId is assigned
-    app.use('/v1', all_routes_v1);
+    // app.use('/v1', all_routes_v1);
     app.use('/v2', all_routes_v2);
 
     app.listen(port, () => {
