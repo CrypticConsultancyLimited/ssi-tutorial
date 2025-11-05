@@ -75,10 +75,10 @@ python3 -m pip install -r requirements.txt --break-system-packages
 ngrok http 8020
 
 # Run demo agent. ACAPY agent will automatically detect the ngrok url and use it as the public endpoint.
-LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io ./run_demo faber
+LEDGER_URL=https://test.bcovrin.vonx.io ./run_demo faber
 
 # or you can set manual endpoint yourself:
-LEDGER_URL=http://dev.greenlight.bcovrin.vonx.io AGENT_ENDPOINT=https://{ngrok_url} ./run_demo faber
+LEDGER_URL=https://test.bcovrin.vonx.io AGENT_ENDPOINT=https://{ngrok_url} ./run_demo faber
 ```
 
 > 💡 **Troubleshooting tip:**
